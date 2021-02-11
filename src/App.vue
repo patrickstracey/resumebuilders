@@ -1,17 +1,15 @@
 <template>
   <the-header></the-header>
-  <job-index></job-index>
+  <router-view></router-view>
 </template>
 
 <script>
 import TheHeader from "./components/global/TheHeader.vue";
-import JobIndex from "./components/index/JobIndex.vue";
 
 export default {
   name: "App",
   components: {
     TheHeader,
-    JobIndex,
   },
 };
 </script>
