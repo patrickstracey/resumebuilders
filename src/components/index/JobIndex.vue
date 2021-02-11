@@ -1,5 +1,4 @@
 <template>
-  <h1>Welcome to resume.builders</h1>
   <div id="opp-holder">
     <job-card
       v-for="job of jobs"
@@ -32,6 +31,7 @@ export default {
   flex-direction: column;
   width: 90%;
   max-width: 900px;
+  margin-top: 80px;
   margin-left: auto;
   margin-right: auto;
 }
