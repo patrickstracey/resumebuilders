@@ -2,7 +2,9 @@
   <header>
     <div class="holder flex-row">
       <router-link to="/"><h1>resume(dot)builders</h1></router-link>
-      <router-link to="/newjob"><h3>Post a Job</h3></router-link>
+      <router-link to="/newjob" class="link" id="post-link"
+        >Post a Job</router-link
+      >
     </div>
   </header>
 </template>
@@ -19,11 +21,19 @@ header {
 
 h1 {
   color: white;
+  margin: unset;
 }
 
 .holder {
   width: 90%;
+  height: 100%;
   align-items: center;
   margin: auto;
+}
+
+#post-link {
+  margin-top: auto;
+  margin-bottom: auto;
+  font-weight: 300;
 }
 </style>

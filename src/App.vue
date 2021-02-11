@@ -16,7 +16,7 @@ export default {
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  /* font-family: Avenir, Helvetica, Arial, sans-serif; */
 }
 
 .flex-row {
@@ -29,5 +29,25 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.link {
+  padding: 2px 8px 2px 8px;
+  border: 1px solid green;
+  background-color: green;
+  color: white;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.link:hover {
+  border-color: rgb(0, 97, 0);
+  background-color: rgb(0, 97, 0);
+}
+
+.link:active {
+  border-color: rgb(4, 53, 4);
+  background-color: rgb(4, 53, 4);
 }
 </style>

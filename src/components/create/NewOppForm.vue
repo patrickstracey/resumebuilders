@@ -83,7 +83,7 @@
       </div>
     </div>
     <div>
-      <button>Post Job!</button>
+      <button class="link">Post Job!</button>
     </div>
   </form>
 </template>
@@ -106,6 +106,7 @@ export default {
   methods: {
     submitForm() {
       const newJob = {
+        id: Math.floor(Math.random() * 100) + 100,
         title: this.oppTitle,
         company: this.oppCompany,
         description: this.oppDescription,
@@ -113,10 +114,7 @@ export default {
         category: this.oppCategory,
         created: new Date(),
       };
-
-      //console.log(JSON.parse(JSON.stringify(newJob)));
-      this.jobs.unshift(newJob);
-      console.log(this.jobs);
+      JAWBS.unshift(newJob);
     },
   },
 };
@@ -166,21 +164,5 @@ input[type="checkbox"] {
 
 input[type="checkbox"] + label {
   font-weight: normal;
-}
-
-button {
-  font: inherit;
-  border: 1px solid #0076bb;
-  background-color: #0076bb;
-  color: white;
-  cursor: pointer;
-  padding: 0.75rem 2rem;
-  border-radius: 30px;
-}
-
-button:hover,
-button:active {
-  border-color: #002350;
-  background-color: #002350;
 }
 </style>
