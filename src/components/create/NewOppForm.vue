@@ -7,20 +7,26 @@
         name="opp-title"
         type="text"
         v-model.trim="oppTitle"
+        required
       />
     </div>
     <div class="form-control">
-      <label for="company-name">Job Title</label>
-      <input id="company-name" name="company-name" type="text" required />
+      <label for="opp-company">Company Name</label>
+      <input
+        id="opp-company"
+        name="opp-company"
+        type="text"
+        v-model.trim="oppCompany"
+        required
+      />
     </div>
-
     <div class="form-control">
       <label for="opp-description">Job Description</label>
       <textarea
         id="opp-description"
         name="opp-description"
-        type="text"
         rows="8"
+        v-model="oppDescription"
         required
       ></textarea>
     </div>
@@ -28,15 +34,19 @@
     <div class="form-control">
       <label for="opp-cat">Job Category</label>
       <select id="opp-cat" name="opp-cat" v-model="oppCategory">
-        <option value="marketing">Marketing</option>
-        <option value="software">Software</option>
-        <option value="design">Design</option>
-        <option value="product">Product</option>
-        <option value="sales">Sales</option>
-        <option value="account-management">Account Management</option>
-        <option value="warehousing">Warehouse</option>
-        <option value="manufacturing">Manufacturing</option>
-        <option value="supply-chain">Supply Chain</option>
+        <option v-bind:value="categoryTypes.ACCOUNT_MANAGEMENT"
+          >Account Management</option
+        >
+        <option v-bind:value="categoryTypes.DESIGN">Design</option>
+        <option v-bind:value="categoryTypes.MANUFACTURING"
+          >Manufacturing</option
+        >
+        <option v-bind:value="categoryTypes.MARKETING">Marketing</option>
+        <option v-bind:value="categoryTypes.PRODUCT">Product</option>
+        <option v-bind:value="categoryTypes.SALES">Sales</option>
+        <option v-bind:value="categoryTypes.SOFTWARE">Software</option>
+        <option v-bind:value="categoryTypes.SUPPLY_CHAIN">Supply Chain</option>
+        <option v-bind:value="categoryTypes.WAREHOUSE">Warehouse</option>
       </select>
     </div>
     <div class="form-control">
@@ -79,16 +89,35 @@
 </template>
 
 <script>
+import { JAWBS } from "../../_mock/jobs.js";
+import { CATEGORIES } from "../../enums/category.js";
 export default {
   data() {
     return {
       oppTitle: "",
+      oppCompany: "",
+      oppDescription: "",
       oppCategory: null,
       oppAttributes: [],
+      categoryTypes: CATEGORIES,
+      jobs: JAWBS,
     };
   },
   methods: {
-    submitForm() {},
+    submitForm() {
+      const newJob = {
+        title: this.oppTitle,
+        company: this.oppCompany,
+        description: this.oppDescription,
+        attributes: this.oppAttributes,
+        category: this.oppCategory,
+        created: new Date(),
+      };
+
+      //console.log(JSON.parse(JSON.stringify(newJob)));
+      this.jobs.unshift(newJob);
+      console.log(this.jobs);
+    },
   },
 };
 </script>
@@ -96,6 +125,7 @@ export default {
 <style scoped>
 form {
   margin: 2rem auto;
+  margin-top: 80px;
   max-width: 40rem;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
