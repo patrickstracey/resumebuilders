@@ -2,7 +2,7 @@ import { createApp } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
 
 import App from "./App.vue";
-import JobIndex from "./components/index/JobIndex.vue";
+import JobIndex from "./components/jobs/JobIndex.vue";
 import JobDetail from "./components/detail/JobDetail.vue";
 import NewOppForm from "./components/create/NewOppForm.vue";
 

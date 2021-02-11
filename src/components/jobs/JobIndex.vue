@@ -1,5 +1,9 @@
 <template>
   <div id="opp-holder" class="flex-column">
+    <span
+      >Explore internships and entry level jobs designed to get your foot in the
+      door and level up your experience.</span
+    >
     <job-card
       v-for="job of jobs"
       v-bind:key="job.id"

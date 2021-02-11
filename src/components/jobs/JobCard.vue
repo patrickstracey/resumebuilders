@@ -59,20 +59,21 @@ span {
 }
 
 .opportunity-card {
-  margin: 15px;
+  margin: 8px;
+  box-shadow: 0 2px 8px rgba(42, 77, 44, 0.26);
+  border-radius: 16px;
 }
 
 .header:hover {
-  background-color: whitesmoke;
+  background-color: rgba(0, 128, 0, 0.082);
 }
 
 .header:active {
-  background-color: gray;
+  background-color: rgba(7, 94, 7, 0.363);
 }
 
 .header {
   padding: 15px;
-  border: solid 2px green;
   border-radius: 16px;
   cursor: pointer;
 }
@@ -102,7 +103,6 @@ span {
 .details {
   white-space: pre-line;
   padding: 16px 12px 16px 12px;
-  border: solid 2px gray;
   border-top: unset;
   border-radius: 0px 0px 16px 16px;
 }
@@ -110,6 +110,6 @@ span {
 .expanded {
   border-radius: 16px 16px 0px 0px;
   border-bottom: unset;
-  background-color: rgba(0, 128, 0, 0.219);
+  background-color: rgba(245, 245, 245, 0.911);
 }
 </style>
