@@ -1,21 +1,37 @@
 <template>
+  <h1>Hello there</h1>
   <div class="opportunity-card">
     <div class="info group">
       <h2>{{ job.title }}</h2>
       <p>{{ job.company }}</p>
     </div>
     <div class="detail-link group">
-      <router-link v-bind:to="'/opportunity/' + job.id"
-        >View Opportunity</router-link
-      >
+      <a href>View Opportunity</a>
     </div>
   </div>
 </template>
 
 <script>
+import { JAWBS } from "../../_mock/jobs.js";
 export default {
-  props: {
-    job: Object,
+  props: ["oppId"],
+  data() {
+    return {
+      jobs: JAWBS,
+    };
+  },
+  created() {
+    this.loadOpportunity(this.oppId);
+  },
+  methods: {
+    loadOpportunity(oppUuid) {
+      this.job = this.jobs.find((opp) => opp.id == oppUuid);
+    },
+  },
+  watch: {
+    oppId(newId) {
+      this.loadOpportunity(newId);
+    },
   },
 };
 </script>
