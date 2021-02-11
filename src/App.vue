@@ -1,15 +1,18 @@
 <template>
   <the-header></the-header>
   <router-view></router-view>
+  <the-footer></the-footer>
 </template>
 
 <script>
 import TheHeader from "./components/global/TheHeader.vue";
+import TheFooter from "./components/global/TheFooter.vue";
 
 export default {
   name: "App",
   components: {
     TheHeader,
+    TheFooter,
   },
 };
 </script>
@@ -17,6 +20,7 @@ export default {
 <style>
 #app {
   /* font-family: Avenir, Helvetica, Arial, sans-serif; */
+  min-height: 100vh;
 }
 
 .flex-row {
