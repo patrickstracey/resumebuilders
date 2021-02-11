@@ -1,5 +1,5 @@
 <template>
-  <div id="opp-holder">
+  <div id="opp-holder" class="flex-column">
     <job-card
       v-for="job of jobs"
       v-bind:key="job.id"
@@ -27,8 +27,7 @@ export default {
 
 <style scoped>
 #opp-holder {
-  display: flex;
-  flex-direction: column;
+  justify-content: flex-start;
   width: 90%;
   max-width: 900px;
   margin-top: 80px;

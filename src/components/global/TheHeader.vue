@@ -1,6 +1,9 @@
 <template>
   <header>
-    <h1>resume(dot)builders</h1>
+    <div class="holder flex-row">
+      <router-link to="/"><h1>resume(dot)builders</h1></router-link>
+      <router-link to="/newjob"><h3>Post a Job</h3></router-link>
+    </div>
   </header>
 </template>
 
@@ -9,9 +12,6 @@ header {
   width: 100%;
   height: 4rem;
   background-color: green;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   position: absolute;
   top: 0;
   left: 0;
@@ -19,5 +19,11 @@ header {
 
 h1 {
   color: white;
+}
+
+.holder {
+  width: 90%;
+  align-items: center;
+  margin: auto;
 }
 </style>

@@ -18,4 +18,16 @@ export default {
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
 }
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 </style>
