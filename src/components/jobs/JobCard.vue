@@ -62,6 +62,7 @@ span {
   margin: 8px;
   box-shadow: 0 2px 8px rgba(42, 77, 44, 0.26);
   border-radius: 16px;
+  background-color: white;
 }
 
 .header:hover {
