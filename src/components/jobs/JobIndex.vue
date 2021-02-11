@@ -1,9 +1,5 @@
 <template>
   <div id="opp-holder" class="flex-column">
-    <span
-      >Explore internships and entry level jobs designed to get your foot in the
-      door and level up your experience.</span
-    >
     <job-card
       v-for="job of jobs"
       v-bind:key="job.id"
@@ -32,9 +28,9 @@ export default {
 <style scoped>
 #opp-holder {
   justify-content: flex-start;
-  width: 90%;
+  width: 100%;
   max-width: 900px;
-  margin-top: 80px;
+  margin-top: 40px;
   margin-left: auto;
   margin-right: auto;
 }

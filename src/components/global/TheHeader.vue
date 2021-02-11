@@ -5,7 +5,7 @@
         ><h1>resume(dot)builders</h1></router-link
       >
       <router-link to="/newjob" class="link" id="post-link"
-        >Post a Job</router-link
+        >Post a Job <small>(it's free!)</small></router-link
       >
     </div>
   </header>
