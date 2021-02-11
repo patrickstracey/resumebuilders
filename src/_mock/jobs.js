@@ -7,6 +7,7 @@ export const JAWBS = [
     attributes: ["Temp Work"],
     category: "Marketing",
     created: new Date(),
+    url: "https://google.com",
   },
   {
     id: 214,
@@ -30,7 +31,8 @@ export const JAWBS = [
     id: 218,
     company: "Facebook",
     title: "Marketing Coordinator",
-    description: "Social media and stuff",
+    description:
+      "Social media and stuff\nIt is cool and you will have\n... a great time!",
     attributes: ["Remote Friendly", "Internship"],
     category: "Marketing",
     created: new Date(),
