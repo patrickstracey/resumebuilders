@@ -42,6 +42,7 @@
     <div class="form-control">
       <label for="opp-cat">Department</label>
       <select id="opp-cat" name="opp-cat" v-model="oppCategory">
+        <option v-bind:value="null"> </option>
         <option
           v-for="category of categoryTypes"
           v-bind:key="category.id"
@@ -54,16 +55,6 @@
       <h2>Relevant Tags</h2>
       <div>
         <input
-          id="att-remote"
-          name="opp-attribute"
-          type="checkbox"
-          value="Remote Friendly"
-          v-model="oppAttributes"
-        />
-        <label for="att-remote">Remote Friendly</label>
-      </div>
-      <div>
-        <input
           id="att-internship"
           name="opp-attribute"
           type="checkbox"
@@ -71,6 +62,16 @@
           v-model="oppAttributes"
         />
         <label for="att-internship">Internship</label>
+      </div>
+      <div>
+        <input
+          id="att-remote"
+          name="opp-attribute"
+          type="checkbox"
+          value="Remote Friendly"
+          v-model="oppAttributes"
+        />
+        <label for="att-remote">Remote Friendly</label>
       </div>
       <div>
         <input
@@ -168,6 +169,7 @@ export default {
       this.oppDescription = null;
       this.oppAttributes = [];
       this.oppUrl = null;
+      this.oppCategory = null;
     },
     createNewOpp() {
       this.submitted = false;

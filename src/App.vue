@@ -26,11 +26,11 @@ export default {
 :root {
   --rb-main: #008000;
   --rb-main-hover: #056905;
-  --rb-main-light: #dff5df;
-  --rb-main-light-active: #b8d6b8;
+  --rb-main-light: #eeffee;
+  --rb-main-light-active: #b5e9b5;
   --rb-main-dark: #075307;
   --rb-accent: #ffa500;
-  --rb-accent-light: #ffefc8;
+  --rb-accent-light: #fff7e3;
   --rb-accent-dark: #ff4500;
   --rb-third: #575555;
   --rb-third-light: #f5f5f5;
