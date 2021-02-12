@@ -5,7 +5,7 @@ export const JAWBS = [
     title: "Marketing Coordinator",
     description: "Social media and stuff",
     attributes: ["Temp"],
-    category: "Marketing",
+    category: 50,
     created: new Date(),
     url: "https://google.com",
   },
@@ -15,7 +15,7 @@ export const JAWBS = [
     title: "Marketing Coordinator",
     description: "Social media and stuff",
     attributes: ["Remote Friendly", "Temp"],
-    category: "Marketing",
+    category: 30,
     created: new Date(),
   },
   {
@@ -24,7 +24,7 @@ export const JAWBS = [
     title: "Marketing Coordinator",
     description: "Social media and stuff",
     attributes: ["Internship"],
-    category: "Marketing",
+    category: 15,
     created: new Date(),
   },
   {
@@ -34,7 +34,7 @@ export const JAWBS = [
     description:
       "Social media and stuff\nIt is cool and you will have\n... a great time!",
     attributes: ["Remote Friendly", "Internship"],
-    category: "Marketing",
+    category: 30,
     created: new Date(),
   },
   {
@@ -43,7 +43,7 @@ export const JAWBS = [
     title: "Marketing Coordinator",
     description: "Social media and stuff",
     attributes: ["Internship"],
-    category: "Marketing",
+    category: 5,
     created: new Date(),
   },
 ];

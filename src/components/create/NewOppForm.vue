@@ -118,13 +118,13 @@ export default {
       if (this.checkFormValidity()) {
         const newJob = {
           id: Math.floor(Math.random() * 100) + 100,
-          title: this.oppTitle,
-          company: this.oppCompany,
-          description: this.oppDescription,
+          title: this.oppTitle.trim(),
+          company: this.oppCompany.trim(),
+          description: this.oppDescription.trim(),
           attributes: this.oppAttributes,
           category: this.oppCategory,
           created: new Date(),
-          url: this.oppUrl,
+          url: this.oppUrl.trim(),
         };
         JAWBS.unshift(newJob);
         this.resetForm();

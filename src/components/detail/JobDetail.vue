@@ -1,5 +1,5 @@
 <template>
-  <div class="detail-page flex-column">
+  <div class="detail-page flex-column" v-if="job">
     <div class="headline group">
       <h2>{{ job.title }}</h2>
       <p>{{ job.company }}</p>
@@ -17,7 +17,7 @@
       </div>
     </div>
     <div class="details">
-      {{ job.description }}
+      <p>{{ job.description }}</p>
     </div>
 
     <a
@@ -29,6 +29,11 @@
       id="apply-btn"
       >Apply</a
     >
+  </div>
+  <div class="detail-page" v-else>
+    <h2>Uh oh... The opportunity you're looking for doesn't exist 😲</h2>
+    <p>Maybe it was an illusion or something?</p>
+    <router-link to="/" class="link">Back Home</router-link>
   </div>
 </template>
 
