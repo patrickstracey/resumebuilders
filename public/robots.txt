@@ -1,0 +1,7 @@
+User-agent: *
+crawl-delay: 500
+
+User-agent: Googlebot-Image
+Disallow: /
+
+Sitemap:https://resume.builders/sitemap.txt
