@@ -70,15 +70,15 @@ span {
   margin: 8px;
   box-shadow: 0 2px 8px rgba(42, 77, 44, 0.26);
   border-radius: 16px;
-  background-color: white;
+  background-color: #ffffff;
 }
 
 .header:hover {
-  background-color: rgba(0, 128, 0, 0.082);
+  background-color: var(--rb-main-light);
 }
 
 .header:active {
-  background-color: rgba(7, 94, 7, 0.363);
+  background-color: var(--rb-main-light-active);
 }
 
 .header {
@@ -104,20 +104,20 @@ span {
 .expanded {
   border-radius: 16px 16px 0px 0px;
   border-bottom: unset;
-  background-color: rgba(245, 245, 245, 0.911);
+  background-color: #f5f5f5e8;
 }
 
 .tab {
   align-self: flex-end;
   text-decoration: none;
-  color: rgb(87, 87, 87);
+  color: var(--rb-third);
   margin: 24px 12px 24px 0px;
   padding: 4px 4px;
-  border: 1px solid rgb(87, 87, 87);
+  border: 1px solid var(--rb-third);
   border-radius: 6px;
 }
 
 .tab:hover {
-  background-color: whitesmoke;
+  background-color: var(--rb-third-light);
 }
 </style>

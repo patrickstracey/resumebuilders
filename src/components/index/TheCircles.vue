@@ -40,7 +40,7 @@
   list-style: none;
   width: 20px;
   height: 20px;
-  background: rgba(20, 134, 35, 0.548);
+  background: var(--rb-main-light-active);
   animation: animate 25s linear infinite;
   bottom: -150px;
 }

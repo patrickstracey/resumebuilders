@@ -20,7 +20,7 @@ header {
 }
 
 h1 {
-  color: green;
+  color: var(--rb-main);
   margin: unset;
   text-decoration: none;
 }

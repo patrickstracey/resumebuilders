@@ -183,7 +183,7 @@ textarea {
   width: 100%;
   font: inherit;
   margin-top: 0.5rem;
-  border: 3px solid green;
+  border: 3px solid var(--rb-main);
   border-radius: 4px;
 }
 
@@ -207,7 +207,7 @@ input[type="url"] {
 select {
   appearance: none;
   background-color: transparent;
-  border: 3px solid green;
+  border: 3px solid var(--rb-main);
   border-radius: 4px;
   padding: 0 1em 0 0;
   margin: 0;
@@ -220,7 +220,7 @@ select {
 }
 
 option:focus {
-  background-color: green;
+  background-color: var(--rb-main);
 }
 
 .card {
@@ -251,12 +251,12 @@ option:focus {
 }
 
 .success > h2 {
-  color: green;
+  color: var(--rb-main);
 }
 
 .inverse {
   background-color: white;
-  color: green;
+  color: var(--rb-main);
 }
 
 .inverse:hover {

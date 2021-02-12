@@ -32,7 +32,7 @@ footer {
   justify-content: center;
   align-self: flex-end;
   margin: auto;
-  color: green;
+  color: var(--rb-main);
   font-size: 12px;
 }
 </style>

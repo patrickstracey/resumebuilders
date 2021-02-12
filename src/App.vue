@@ -23,6 +23,19 @@ export default {
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Cabin&display=swap");
 
+:root {
+  --rb-main: #008000;
+  --rb-main-hover: #056905;
+  --rb-main-light: #dff5df;
+  --rb-main-light-active: #b8d6b8;
+  --rb-main-dark: #075307;
+  --rb-accent: #ffa500;
+  --rb-accent-light: #ffefc8;
+  --rb-accent-dark: #ff4500;
+  --rb-third: #575555;
+  --rb-third-light: #f5f5f5;
+}
+
 #app {
   font-family: "Cabin", sans-serif;
   font-weight: normal;
@@ -48,8 +61,8 @@ h3 {
 
 .link {
   padding: 4px 12px 4px 12px;
-  border: 1px solid green;
-  background-color: green;
+  border: 1px solid var(--rb-main);
+  background-color: var(--rb-main);
   color: white;
   border-radius: 6px;
   text-decoration: none;
@@ -57,12 +70,12 @@ h3 {
 }
 
 .link:hover {
-  border-color: rgb(0, 97, 0);
-  background-color: rgb(0, 97, 0);
+  border-color: var(--rb-main-hover);
+  background-color: var(--rb-main-hover);
 }
 
 .link:active {
-  border-color: rgb(4, 53, 4);
-  background-color: rgb(4, 53, 4);
+  border-color: var(--rb-main-dark);
+  background-color: var(--rb-main-dark);
 }
 </style>

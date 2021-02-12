@@ -39,21 +39,21 @@ export default {
 
 .attribute {
   margin: 0px 12px 0px 0px;
-  border: 1px solid green;
+  border: 1px solid var(--rb-main);
   border-radius: 6px;
   padding: 4px 12px 4px 12px;
-  background-color: rgba(0, 128, 0, 0.11);
-  color: green;
+  background-color: var(--rb-main-light);
+  color: var(--rb-main);
   font-size: 14px;
 }
 
 .category-shield {
   margin: 0px 12px 0px 0px;
-  border: 1px solid orangered;
+  border: 1px solid var(--rb-accent-dark);
   border-radius: 6px;
   padding: 4px 12px 4px 12px;
-  background-color: rgba(255, 196, 87, 0.137);
-  color: orangered;
+  background-color: var(--rb-accent-light);
+  color: var(--rb-accent-dark);
   font-size: 14px;
 }
 
