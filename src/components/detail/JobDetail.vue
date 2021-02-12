@@ -63,14 +63,17 @@ export default {
 }
 
 .attributes {
+  margin-top: 8px;
   justify-content: flex-start;
 }
 
 .attribute {
-  margin-right: 12px;
-  border: 2px solid green;
+  margin: 0px 12px 0px 0px;
+  border: 1px solid green;
   border-radius: 6px;
   padding: 4px 12px 4px 12px;
-  background-color: whitesmoke;
+  background-color: green;
+  color: white;
+  font-size: 14px;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="submitForm()">
+  <form @submit.prevent="submitForm()" class="flex-column">
     <div class="form-control">
       <label for="opp-title">Job Title</label>
       <input
@@ -7,7 +7,6 @@
         name="opp-title"
         type="text"
         v-model.trim="oppTitle"
-        required
       />
     </div>
     <div class="form-control">
@@ -17,7 +16,6 @@
         name="opp-company"
         type="text"
         v-model.trim="oppCompany"
-        required
       />
     </div>
     <div class="form-control">
@@ -27,12 +25,11 @@
         name="opp-description"
         rows="8"
         v-model="oppDescription"
-        required
       ></textarea>
     </div>
 
     <div class="form-control">
-      <label for="opp-cat">Job Category</label>
+      <label for="opp-cat">Department</label>
       <select id="opp-cat" name="opp-cat" v-model="oppCategory">
         <option v-bind:value="categoryTypes.ACCOUNT_MANAGEMENT"
           >Account Management</option
@@ -50,7 +47,7 @@
       </select>
     </div>
     <div class="form-control">
-      <h2>Job Attributes</h2>
+      <h2>Relevant Tags</h2>
       <div>
         <input
           id="att-remote"
@@ -83,7 +80,7 @@
       </div>
     </div>
     <div>
-      <button class="link">Post Job!</button>
+      <button class="link" id="submit-btn">Post Job!</button>
     </div>
   </form>
 </template>
@@ -133,6 +130,8 @@ form {
 
 .form-control {
   margin: 0.5rem 0;
+  display: flex;
+  flex-direction: column;
 }
 
 label {
@@ -145,15 +144,18 @@ h2 {
 }
 
 input,
-select {
+textarea {
   display: block;
   width: 100%;
   font: inherit;
   margin-top: 0.5rem;
+  border: 3px solid green;
+  border-radius: 4px;
 }
 
-select {
-  width: auto;
+textarea {
+  padding-left: 4px;
+  max-width: 100%;
 }
 
 input[type="checkbox"] {
@@ -162,7 +164,37 @@ input[type="checkbox"] {
   margin-right: 1rem;
 }
 
+input[type="text"] {
+  height: 32px;
+  padding-left: 4px;
+}
+
 input[type="checkbox"] + label {
   font-weight: normal;
+}
+
+select {
+  appearance: none;
+  background-color: transparent;
+  border: 3px solid green;
+  border-radius: 4px;
+  padding: 0 1em 0 0;
+  margin: 0;
+  width: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: inherit;
+  line-height: inherit;
+  height: 32px;
+}
+
+option:focus {
+  background-color: green;
+}
+
+#submit-btn {
+  padding: 8px 16px 8px 16px;
+  margin-top: 24px;
+  cursor: pointer;
 }
 </style>
