@@ -65,16 +65,6 @@
       </div>
       <div>
         <input
-          id="att-temp"
-          name="opp-attribute"
-          type="checkbox"
-          value="temp"
-          v-model="oppAttributes"
-        />
-        <label for="att-temp">Temp Work</label>
-      </div>
-      <div>
-        <input
           id="att-internship"
           name="opp-attribute"
           type="checkbox"
@@ -82,6 +72,16 @@
           v-model="oppAttributes"
         />
         <label for="att-internship">Internship</label>
+      </div>
+      <div>
+        <input
+          id="att-temp"
+          name="opp-attribute"
+          type="checkbox"
+          value="temp"
+          v-model="oppAttributes"
+        />
+        <label for="att-temp">Temp</label>
       </div>
     </div>
     <div>

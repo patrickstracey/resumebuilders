@@ -12,7 +12,7 @@
           {{ attribute }}
           <span v-if="attribute === 'Remote Friendly'">🌎</span>
           <span v-else-if="attribute === 'Internship'">🎓</span>
-          <span v-else-if="attribute === 'Temp Work'">⌚</span>
+          <span v-else-if="attribute === 'Temp'">⌚</span>
         </p>
       </div>
     </div>
