@@ -5,20 +5,9 @@
         <div>
           <h2>{{ job.title }}</h2>
           <span>{{ job.company }}</span>
-          <div class="flex-row attributes">
-            <p
-              v-for="attribute of job.attributes"
-              v-bind:key="attribute"
-              class="attribute"
-            >
-              {{ attribute }}
-              <span v-if="attribute === 'Remote Friendly'">🌎</span>
-              <span v-else-if="attribute === 'Internship'">🎓</span>
-              <span v-else-if="attribute === 'Temp Work'">⌚</span>
-            </p>
-          </div>
         </div>
         <div class="detail-link group">
+          <span>Marketing</span>
           <a
             v-bind:href="job.url"
             v-if="job.url"
@@ -28,6 +17,18 @@
             >Apply</a
           >
         </div>
+      </div>
+      <div class="flex-row attributes">
+        <p
+          v-for="attribute of job.attributes"
+          v-bind:key="attribute"
+          class="attribute"
+        >
+          {{ attribute }}
+          <span v-if="attribute === 'Remote Friendly'">🌎</span>
+          <span v-else-if="attribute === 'Internship'">🎓</span>
+          <span v-else-if="attribute === 'Temp'">⌚</span>
+        </p>
       </div>
     </div>
 
@@ -115,5 +116,15 @@ span {
   border-radius: 16px 16px 0px 0px;
   border-bottom: unset;
   background-color: rgba(245, 245, 245, 0.911);
+}
+
+@media screen and (max-width: 600px) {
+  .attributes {
+    flex-wrap: wrap;
+  }
+
+  .attribute {
+    margin-bottom: 4px;
+  }
 }
 </style>

@@ -37,7 +37,6 @@ h1 {
   margin-bottom: auto;
   font-size: 21px;
   padding: 8px 16px 8px 16px;
-  margin-top: 24px;
   cursor: pointer;
   align-self: center;
   font-weight: 300;
@@ -45,5 +44,15 @@ h1 {
 
 #home-link {
   text-decoration: none;
+}
+
+@media screen and (max-width: 600px) {
+  #post-link {
+    display: none;
+  }
+
+  .flex-row {
+    justify-content: center;
+  }
 }
 </style>
