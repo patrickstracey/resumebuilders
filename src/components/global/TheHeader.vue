@@ -2,7 +2,7 @@
   <header>
     <div class="holder flex-row">
       <router-link to="/" id="home-link"><h1>resume🔨builders</h1></router-link>
-      <router-link to="/newjob" class="link" id="post-link"
+      <router-link to="/new-opportunity" class="link" id="post-link"
         >📢 Post a Job <small>(it's free!)</small></router-link
       >
     </div>

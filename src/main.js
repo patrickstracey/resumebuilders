@@ -10,7 +10,7 @@ const router = createRouter({
   history: createWebHistory(),
   routes: [
     { path: "/", component: TheHomePage },
-    { path: "/newjob", component: NewOppForm },
+    { path: "/new-opportunity", component: NewOppForm },
     { path: "/opportunity/:oppId", component: JobDetail, props: true },
     { path: "/:notFound(.*)", redirect: "/" },
   ],
