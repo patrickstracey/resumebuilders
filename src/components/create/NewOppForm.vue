@@ -1,7 +1,14 @@
 <template>
-  <form @submit.prevent="submitForm()" class="flex-column">
+  <div class="success card" v-if="submitted">
+    <h2>🎉 Your Opportunity Has Been Successfully Submitted! 🎉</h2>
+    <div class="flex-row" id="success-actions">
+      <button @click="createNewOpp()" class="link">Create Another</button>
+      <router-link to="/" class="link inverse">Back Home</router-link>
+    </div>
+  </div>
+  <form @submit.prevent="submitForm()" class="flex-column card" v-else>
     <div class="form-control">
-      <label for="opp-title">Job Title</label>
+      <label for="opp-title">Job Title*</label>
       <input
         id="opp-title"
         name="opp-title"
@@ -10,7 +17,7 @@
       />
     </div>
     <div class="form-control">
-      <label for="opp-company">Company Name</label>
+      <label for="opp-company">Company Name*</label>
       <input
         id="opp-company"
         name="opp-company"
@@ -19,11 +26,11 @@
       />
     </div>
     <div class="form-control">
-      <label for="opp-url">Apply URL</label>
-      <input id="opp-url" name="opp-url" type="text" v-model.trim="oppUrl" />
+      <label for="opp-url">Where to Apply URL*</label>
+      <input id="opp-url" name="opp-url" type="url" v-model.trim="oppUrl" />
     </div>
     <div class="form-control">
-      <label for="opp-description">Job Description</label>
+      <label for="opp-description">Job Description*</label>
       <textarea
         id="opp-description"
         name="opp-description"
@@ -35,20 +42,12 @@
     <div class="form-control">
       <label for="opp-cat">Department</label>
       <select id="opp-cat" name="opp-cat" v-model="oppCategory">
-        <option v-bind:value="categoryTypes.ACCOUNT_MANAGEMENT"
-          >Account Management</option
+        <option
+          v-for="category of categoryTypes"
+          v-bind:key="category.id"
+          v-bind:value="category.id"
+          >{{ category.display }}</option
         >
-        <option v-bind:value="categoryTypes.BUSINESS">Business</option>
-        <option v-bind:value="categoryTypes.DESIGN">Design</option>
-        <option v-bind:value="categoryTypes.LOGISTICS">Logistics</option>
-        <option v-bind:value="categoryTypes.MANUFACTURING"
-          >Manufacturing</option
-        >
-        <option v-bind:value="categoryTypes.MARKETING">Marketing</option>
-        <option v-bind:value="categoryTypes.PRODUCT">Product</option>
-        <option v-bind:value="categoryTypes.SALES">Sales</option>
-        <option v-bind:value="categoryTypes.SOFTWARE">Software</option>
-        <option v-bind:value="categoryTypes.WAREHOUSE">Warehouse</option>
       </select>
     </div>
     <div class="form-control">
@@ -58,7 +57,7 @@
           id="att-remote"
           name="opp-attribute"
           type="checkbox"
-          value="remote"
+          value="Remote Friendly"
           v-model="oppAttributes"
         />
         <label for="att-remote">Remote Friendly</label>
@@ -68,7 +67,7 @@
           id="att-internship"
           name="opp-attribute"
           type="checkbox"
-          value="internship"
+          value="Internship"
           v-model="oppAttributes"
         />
         <label for="att-internship">Internship</label>
@@ -78,13 +77,19 @@
           id="att-temp"
           name="opp-attribute"
           type="checkbox"
-          value="temp"
+          value="Temp"
           v-model="oppAttributes"
         />
         <label for="att-temp">Temp</label>
       </div>
     </div>
     <div>
+      <div v-if="errors.length > 0" class="errors">
+        <h2>We need a little bit more info from you... 😬</h2>
+        <ul>
+          <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
+        </ul>
+      </div>
       <button class="link" id="submit-btn">Post Job!</button>
     </div>
   </form>
@@ -96,60 +101,82 @@ import { CATEGORIES } from "../../enums/category.js";
 export default {
   data() {
     return {
-      oppTitle: "",
-      oppCompany: "",
-      oppDescription: "",
+      oppTitle: null,
+      oppCompany: null,
+      oppDescription: null,
       oppCategory: null,
       oppAttributes: [],
       categoryTypes: CATEGORIES,
-      oppUrl: "",
+      oppUrl: null,
       jobs: JAWBS,
+      errors: [],
+      submitted: false,
     };
   },
   methods: {
     submitForm() {
-      const newJob = {
-        id: Math.floor(Math.random() * 100) + 100,
-        title: this.oppTitle,
-        company: this.oppCompany,
-        description: this.oppDescription,
-        attributes: this.oppAttributes,
-        category: this.oppCategory,
-        created: new Date(),
-        url: this.oppUrl,
-      };
-      JAWBS.unshift(newJob);
+      if (this.checkFormValidity()) {
+        const newJob = {
+          id: Math.floor(Math.random() * 100) + 100,
+          title: this.oppTitle,
+          company: this.oppCompany,
+          description: this.oppDescription,
+          attributes: this.oppAttributes,
+          category: this.oppCategory,
+          created: new Date(),
+          url: this.oppUrl,
+        };
+        JAWBS.unshift(newJob);
+        this.resetForm();
+        this.submitted = true;
+      }
+    },
+    checkFormValidity() {
+      this.errors = [];
+      if (
+        this.oppTitle &&
+        this.oppCompany &&
+        this.oppDescription &&
+        this.oppUrl
+      ) {
+        return true;
+      } else {
+        if (!this.oppTitle) {
+          this.errors.push(
+            "Missing Job Title - what is the name of the role? 💼"
+          );
+        }
+        if (!this.oppCompany) {
+          this.errors.push("Missing Company - who are you? 🏦");
+        }
+        if (!this.oppDescription) {
+          this.errors.push(
+            "Missing Job Description - what will this role be doing day-to-day? 📜"
+          );
+        }
+        if (!this.oppUrl) {
+          this.errors.push(
+            "Missing URL - we need a link to the page where people can apply 🔗"
+          );
+        }
+        return false;
+      }
+    },
+    resetForm() {
+      this.oppTitle = null;
+      this.oppCompany = null;
+      this.oppDescription = null;
+      this.oppAttributes = [];
+      this.oppUrl = null;
+    },
+    createNewOpp() {
+      this.submitted = false;
     },
   },
 };
 </script>
 
 <style scoped>
-form {
-  margin: 2rem auto;
-  margin-top: 80px;
-  max-width: 40rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-  padding: 2rem;
-  background-color: #ffffff;
-}
-
-.form-control {
-  margin: 0.5rem 0;
-  display: flex;
-  flex-direction: column;
-}
-
-label {
-  font-weight: bold;
-}
-
-h2 {
-  font-size: 1rem;
-  margin: 0.5rem 0;
-}
-
 input,
 textarea {
   display: block;
@@ -171,7 +198,8 @@ input[type="checkbox"] {
   margin-right: 1rem;
 }
 
-input[type="text"] {
+input[type="text"],
+input[type="url"] {
   height: 32px;
   padding-left: 4px;
 }
@@ -199,9 +227,53 @@ option:focus {
   background-color: green;
 }
 
+.card {
+  margin: 2rem auto;
+  margin-top: 80px;
+  max-width: 40rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  padding: 2rem;
+  background-color: #ffffff;
+}
+
+.form-control {
+  margin: 0.5rem 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.errors {
+  border: 3px solid rgb(128, 0, 0);
+  background-color: rgba(255, 58, 58, 0.116);
+  border-radius: 4px;
+  padding: 8px 16px;
+}
+
+.success {
+  text-align: center;
+}
+
+.success > h2 {
+  color: green;
+}
+
+.inverse {
+  background-color: white;
+  color: green;
+}
+
+.inverse:hover {
+  background-color: whitesmoke;
+}
+
 #submit-btn {
   padding: 8px 16px 8px 16px;
   margin-top: 24px;
   cursor: pointer;
+}
+
+#success-actions {
+  justify-content: space-evenly;
 }
 </style>
