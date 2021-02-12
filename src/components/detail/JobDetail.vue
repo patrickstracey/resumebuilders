@@ -3,18 +3,7 @@
     <div class="headline group">
       <h2>{{ job.title }}</h2>
       <p>{{ job.company }}</p>
-      <div class="flex-row attributes">
-        <p
-          v-for="attribute of job.attributes"
-          v-bind:key="attribute"
-          class="attribute"
-        >
-          {{ attribute }}
-          <span v-if="attribute === 'Remote Friendly'">🌎</span>
-          <span v-else-if="attribute === 'Internship'">🎓</span>
-          <span v-else-if="attribute === 'Temp'">⌚</span>
-        </p>
-      </div>
+      <shield-detail v-bind:job="job"></shield-detail>
     </div>
     <div class="details">
       <p>{{ job.description }}</p>
@@ -39,7 +28,9 @@
 
 <script>
 import { JAWBS } from "../../_mock/jobs.js";
+import ShieldDetail from "../shields/ShieldDetail.vue";
 export default {
+  components: { ShieldDetail },
   props: ["oppId"],
   data() {
     return {
@@ -78,21 +69,6 @@ export default {
 .details {
   white-space: pre-line;
   margin-top: 24px;
-}
-
-.attributes {
-  margin-top: 8px;
-  justify-content: flex-start;
-}
-
-.attribute {
-  margin: 0px 12px 0px 0px;
-  border: 1px solid green;
-  border-radius: 6px;
-  padding: 4px 12px 4px 12px;
-  background-color: rgba(0, 128, 0, 0.11);
-  color: green;
-  font-size: 14px;
 }
 
 #apply-btn {
