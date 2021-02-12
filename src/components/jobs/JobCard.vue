@@ -107,7 +107,7 @@ span {
 
 .details {
   white-space: pre-line;
-  padding: 16px 12px 16px 12px;
+  padding: 2px 12px 36px 12px;
   border-top: unset;
   border-radius: 0px 0px 16px 16px;
 }
