@@ -19,6 +19,10 @@
       />
     </div>
     <div class="form-control">
+      <label for="opp-url">Apply URL</label>
+      <input id="opp-url" name="opp-url" type="text" v-model.trim="oppUrl" />
+    </div>
+    <div class="form-control">
       <label for="opp-description">Job Description</label>
       <textarea
         id="opp-description"
@@ -97,6 +101,7 @@ export default {
       oppCategory: null,
       oppAttributes: [],
       categoryTypes: CATEGORIES,
+      oppUrl: "",
       jobs: JAWBS,
     };
   },
@@ -110,6 +115,7 @@ export default {
         attributes: this.oppAttributes,
         category: this.oppCategory,
         created: new Date(),
+        url: this.oppUrl,
       };
       JAWBS.unshift(newJob);
     },

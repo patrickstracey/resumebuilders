@@ -38,7 +38,7 @@ export default {
 }
 
 .link {
-  padding: 2px 8px 2px 8px;
+  padding: 4px 12px 4px 12px;
   border: 1px solid green;
   background-color: green;
   color: white;

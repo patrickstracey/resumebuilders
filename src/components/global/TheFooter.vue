@@ -1,10 +1,18 @@
 <template>
   <footer>
-    <div class="holder flex-row">
-      &#169; resume.builders 2021
-    </div>
+    <div class="holder flex-row">👷 &#169; resume.builders {{ year }} 👷‍♀️</div>
   </footer>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      year: new Date().getFullYear(),
+    };
+  },
+};
+</script>
 
 <style scoped>
 footer {
