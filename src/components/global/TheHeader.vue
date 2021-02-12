@@ -39,7 +39,6 @@ h1 {
   padding: 8px 16px 8px 16px;
   cursor: pointer;
   align-self: center;
-  font-weight: 300;
 }
 
 #home-link {

@@ -204,10 +204,6 @@ input[type="url"] {
   padding-left: 4px;
 }
 
-input[type="checkbox"] + label {
-  font-weight: normal;
-}
-
 select {
   appearance: none;
   background-color: transparent;

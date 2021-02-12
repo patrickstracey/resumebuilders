@@ -21,8 +21,17 @@ export default {
 </script>
 
 <style>
+@import url("https://fonts.googleapis.com/css2?family=Cabin&display=swap");
+
 #app {
-  /* font-family: Avenir, Helvetica, Arial, sans-serif; */
+  font-family: "Cabin", sans-serif;
+  font-weight: normal;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 300;
 }
 
 .flex-row {

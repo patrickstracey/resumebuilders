@@ -76,6 +76,5 @@ export default {
   margin-top: 24px;
   cursor: pointer;
   align-self: center;
-  font-weight: 300;
 }
 </style>
