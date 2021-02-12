@@ -123,7 +123,7 @@
 @keyframes animate {
   0% {
     transform: translateY(0) rotate(0deg);
-    opacity: 1;
+    opacity: 0.9;
     border-radius: 0;
   }
 
