@@ -56,4 +56,15 @@ export default {
   color: orangered;
   font-size: 14px;
 }
+
+@media screen and (max-width: 600px) {
+  .attributes {
+    flex-wrap: wrap;
+  }
+
+  .attribute,
+  .category-shield {
+    margin-bottom: 4px;
+  }
+}
 </style>

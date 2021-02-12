@@ -120,15 +120,4 @@ span {
 .tab:hover {
   background-color: whitesmoke;
 }
-
-@media screen and (max-width: 600px) {
-  .attributes {
-    flex-wrap: wrap;
-  }
-
-  .attribute,
-  .category-shield {
-    margin-bottom: 4px;
-  }
-}
 </style>
