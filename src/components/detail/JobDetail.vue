@@ -49,10 +49,17 @@ export default {
   margin: 90px auto auto auto;
   width: 90%;
   max-width: 900px;
+  background-color: white;
+  min-height: 70vh;
+  box-shadow: 0 2px 8px rgba(42, 77, 44, 0.26);
+  padding: 16px;
+  border-radius: 16px;
+  justify-content: flex-start;
 }
 
 .details {
   white-space: pre-line;
+  margin-top: 24px;
 }
 
 .attributes {
