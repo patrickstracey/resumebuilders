@@ -38,7 +38,9 @@
         <option v-bind:value="categoryTypes.ACCOUNT_MANAGEMENT"
           >Account Management</option
         >
+        <option v-bind:value="categoryTypes.BUSINESS">Business</option>
         <option v-bind:value="categoryTypes.DESIGN">Design</option>
+        <option v-bind:value="categoryTypes.LOGISTICS">Logistics</option>
         <option v-bind:value="categoryTypes.MANUFACTURING"
           >Manufacturing</option
         >
@@ -46,7 +48,6 @@
         <option v-bind:value="categoryTypes.PRODUCT">Product</option>
         <option v-bind:value="categoryTypes.SALES">Sales</option>
         <option v-bind:value="categoryTypes.SOFTWARE">Software</option>
-        <option v-bind:value="categoryTypes.SUPPLY_CHAIN">Supply Chain</option>
         <option v-bind:value="categoryTypes.WAREHOUSE">Warehouse</option>
       </select>
     </div>

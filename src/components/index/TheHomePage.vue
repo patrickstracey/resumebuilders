@@ -1,7 +1,7 @@
 <template>
   <div class="flex-column" id="home-page">
     <span id="welcome-msg"
-      >Explore entry level jobs and internships that get your foot in the door
+      >Explore opportunities and internships that will get your foot in the door
       and level up your experience.</span
     >
     <job-index></job-index>
