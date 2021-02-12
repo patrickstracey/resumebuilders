@@ -1,11 +1,9 @@
 <template>
   <header>
     <div class="holder flex-row">
-      <router-link to="/" id="home-link"
-        ><h1>resume(dot)builders</h1></router-link
-      >
+      <router-link to="/" id="home-link"><h1>resume🔨builders</h1></router-link>
       <router-link to="/newjob" class="link" id="post-link"
-        >Post a Job <small>(it's free!)</small></router-link
+        >📢 Post a Job <small>(it's free!)</small></router-link
       >
     </div>
   </header>
@@ -37,8 +35,12 @@ h1 {
 #post-link {
   margin-top: auto;
   margin-bottom: auto;
-  font-weight: 300;
   font-size: 21px;
+  padding: 8px 16px 8px 16px;
+  margin-top: 24px;
+  cursor: pointer;
+  align-self: center;
+  font-weight: 300;
 }
 
 #home-link {

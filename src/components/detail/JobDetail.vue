@@ -10,12 +10,25 @@
           class="attribute"
         >
           {{ attribute }}
+          <span v-if="attribute === 'Remote Friendly'">🌎</span>
+          <span v-else-if="attribute === 'Internship'">🎓</span>
+          <span v-else-if="attribute === 'Temp Work'">⌚</span>
         </p>
       </div>
     </div>
     <div class="details">
       {{ job.description }}
     </div>
+
+    <a
+      v-bind:href="job.url"
+      v-if="job.url"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="link"
+      id="apply-btn"
+      >Apply</a
+    >
   </div>
 </template>
 
@@ -72,8 +85,16 @@ export default {
   border: 1px solid green;
   border-radius: 6px;
   padding: 4px 12px 4px 12px;
-  background-color: green;
-  color: white;
+  background-color: rgba(0, 128, 0, 0.11);
+  color: green;
   font-size: 14px;
+}
+
+#apply-btn {
+  padding: 8px 16px 8px 16px;
+  margin-top: 24px;
+  cursor: pointer;
+  align-self: center;
+  font-weight: 300;
 }
 </style>

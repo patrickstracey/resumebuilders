@@ -12,6 +12,9 @@
               class="attribute"
             >
               {{ attribute }}
+              <span v-if="attribute === 'Remote Friendly'">🌎</span>
+              <span v-else-if="attribute === 'Internship'">🎓</span>
+              <span v-else-if="attribute === 'Temp Work'">⌚</span>
             </p>
           </div>
         </div>
@@ -96,8 +99,8 @@ span {
   border: 1px solid green;
   border-radius: 6px;
   padding: 4px 12px 4px 12px;
-  background-color: green;
-  color: white;
+  background-color: rgba(0, 128, 0, 0.11);
+  color: green;
   font-size: 14px;
 }
 
