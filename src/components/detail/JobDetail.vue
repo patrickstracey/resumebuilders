@@ -27,22 +27,24 @@
 </template>
 
 <script>
-import { JAWBS } from "../../_mock/jobs.js";
 import ShieldDetail from "../shields/ShieldDetail.vue";
+import firebaseInit from "../../firebaseInit.js";
+const jobsRef = firebaseInit.firestore().collection("opportunities");
 export default {
   components: { ShieldDetail },
   props: ["oppId"],
   data() {
     return {
-      jobs: JAWBS,
+      job: {},
     };
   },
-  created() {
+  mounted() {
     this.loadOpportunity(this.oppId);
   },
   methods: {
-    loadOpportunity(oppUuid) {
-      this.job = this.jobs.find((opp) => opp.id == oppUuid);
+    async loadOpportunity(oppUuid) {
+      const jobFetch = await jobsRef.doc(oppUuid).get();
+      this.job = jobFetch.data();
     },
   },
   watch: {
