@@ -10,17 +10,28 @@
 
 <script>
 import JobCard from "./JobCard.vue";
-import { JAWBS } from "../../_mock/jobs.js";
+import firebaseInit from "../../firebaseInit.js";
+const jobsRef = firebaseInit.firestore().collection("opportunities");
+
 export default {
   components: { JobCard },
   name: "JobIndex",
-  props: {
-    msg: String,
-  },
   data() {
     return {
-      jobs: JAWBS,
+      jobs: [],
     };
+  },
+  methods: {
+    async getListings() {
+      const jawbs = await jobsRef.limit(5).get();
+      jawbs.forEach((result) => {
+        const jawb = { id: result.id, ...result.data() };
+        this.jobs.push(jawb);
+      });
+    },
+  },
+  mounted() {
+    this.getListings();
   },
 };
 </script>
