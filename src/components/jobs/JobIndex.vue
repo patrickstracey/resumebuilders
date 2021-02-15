@@ -1,12 +1,22 @@
 <template>
   <div class="flex-row" id="filter-btn-holder">
     <button
+      v-for="type of jobTypes"
+      v-bind:key="type.id"
+      class="link filter-btn accent"
+      @click="filterListingByType(type.id)"
+      v-bind:class="{ active: typeFilter.includes(type.id) }"
+    >
+      {{ type.display }}
+    </button>
+    <button
       v-for="category of categories"
       v-bind:key="category.id"
-      class="link filter-btn"
-      @click="filterListing(category.id)"
+      class="link filter-btn primary"
+      @click="filterListingByIndustry(category.id)"
+      v-bind:class="{ active: categoryFilter === category.id }"
     >
-      {{ categoriesByInt[category.id] }}
+      {{ category.display }}
     </button>
   </div>
   <div id="opp-holder" class="flex-column">
@@ -21,9 +31,11 @@
 <script>
 import JobCard from "./JobCard.vue";
 import firebaseInit from "../../firebaseInit.js";
-import { CATEGORIES, CATEGORIES_BY_INT } from "../../enums/category.js";
+import { CATEGORIES } from "../../enums/category.js";
+import { JOB_TYPES } from "../../enums/jobTypes.js";
 
 const jobsRef = firebaseInit.firestore().collection("opportunities");
+//firebaseInit.firestore.setLogLevel("debug");
 
 export default {
   components: { JobCard },
@@ -32,21 +44,53 @@ export default {
     return {
       jobs: [],
       categories: CATEGORIES,
-      categoriesByInt: CATEGORIES_BY_INT,
+      jobTypes: JOB_TYPES,
+      typeFilter: [],
+      categoryFilter: null,
     };
   },
   methods: {
     async getListings() {
       const jawbs = await jobsRef.limit(5).get();
-      jawbs.forEach((result) => {
+      this.convertToDataArray(jawbs);
+    },
+    async filterListingByIndustry(category) {
+      this.categoryFilter = category;
+      const query = await this.buildQuery();
+      const industryList = await query.get();
+      this.convertToDataArray(industryList);
+    },
+    async filterListingByType(type) {
+      if (this.typeFilter.includes(type)) {
+        const i = this.typeFilter.indexOf(type);
+        this.typeFilter.splice(i, 1);
+      } else {
+        this.typeFilter.push(type);
+      }
+      const query = await this.buildQuery();
+      const industryList = await query.get();
+      this.convertToDataArray(industryList);
+    },
+    buildQuery() {
+      let query = jobsRef;
+      if (this.categoryFilter) {
+        query = query.where("category", "==", this.categoryFilter);
+      }
+      if (this.typeFilter.length > 0) {
+        query = query.where(
+          "attributes",
+          "array-contains-any",
+          this.typeFilter
+        );
+      }
+      return query.limit(24);
+    },
+    convertToDataArray(dataArray) {
+      this.jobs = [];
+      dataArray.forEach((result) => {
         const jawb = { id: result.id, ...result.data() };
         this.jobs.push(jawb);
       });
-    },
-    filterListing(category) {
-      console.log(
-        `filtering for ${this.categoriesByInt[category]} -- ${category}`
-      );
     },
   },
   mounted() {
@@ -74,13 +118,34 @@ export default {
 .filter-btn {
   margin: 4px;
   background-color: white;
-  color: var(--rb-main);
   border-width: 3px;
   flex-basis: 238px;
   flex-grow: 1;
 }
 
-.filter-btn:hover {
+.primary {
+  color: var(--rb-main);
+  border-color: var(--rb-main);
+}
+
+.primary:hover {
   background-color: var(--rb-main-light-active);
+}
+
+.primary.active {
+  background-color: var(--rb-main-light-active);
+}
+
+.accent {
+  color: var(--rb-accent-dark);
+  border-color: var(--rb-accent-dark);
+}
+
+.accent:hover {
+  background-color: var(--rb-accent-dark-active);
+}
+
+.accent.active {
+  background-color: var(--rb-accent-dark-active);
 }
 </style>
