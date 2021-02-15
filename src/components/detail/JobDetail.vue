@@ -76,7 +76,6 @@ export default {
 #apply-btn {
   padding: 8px 16px 8px 16px;
   margin-top: 24px;
-  cursor: pointer;
   align-self: center;
 }
 </style>

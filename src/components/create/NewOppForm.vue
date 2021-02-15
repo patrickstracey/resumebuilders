@@ -198,6 +198,7 @@ input[type="checkbox"] {
   display: inline-block;
   width: auto;
   margin-right: 1rem;
+  cursor: pointer;
 }
 
 input[type="text"],
@@ -216,7 +217,7 @@ select {
   width: 100%;
   font-family: inherit;
   font-size: inherit;
-  cursor: inherit;
+  cursor: pointer;
   line-height: inherit;
   height: 32px;
 }
@@ -268,7 +269,6 @@ option:focus {
 #submit-btn {
   padding: 8px 16px 8px 16px;
   margin-top: 24px;
-  cursor: pointer;
 }
 
 #success-actions {

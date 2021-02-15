@@ -67,6 +67,7 @@ h3 {
   border-radius: 6px;
   text-decoration: none;
   font-size: 18px;
+  cursor: pointer;
 }
 
 .link:hover {
