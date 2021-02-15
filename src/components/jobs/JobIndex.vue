@@ -1,16 +1,15 @@
 <template>
+  <div class="flex-row" id="filter-btn-holder">
+    <button
+      v-for="category of categories"
+      v-bind:key="category.id"
+      class="link filter-btn"
+      @click="filterListing(category.id)"
+    >
+      {{ categoriesByInt[category.id] }}
+    </button>
+  </div>
   <div id="opp-holder" class="flex-column">
-    <div class="flex-row" id="filter-btn-holder">
-      <button
-        v-for="category of categories"
-        v-bind:key="category.id"
-        class="link filter-btn"
-        @click="filterListing(category.id)"
-      >
-        {{ categoriesByInt[category.id] }}
-      </button>
-    </div>
-
     <job-card
       v-for="job of jobs"
       v-bind:key="job.id"
@@ -69,6 +68,7 @@ export default {
 #filter-btn-holder {
   flex-wrap: wrap;
   justify-content: space-evenly;
+  margin-top: 24px;
 }
 
 .filter-btn {
