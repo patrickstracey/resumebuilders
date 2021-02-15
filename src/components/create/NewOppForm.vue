@@ -53,35 +53,15 @@
     </div>
     <div class="form-control">
       <h2>Relevant Tags</h2>
-      <div>
+      <div v-for="type of jobTypes" v-bind:key="type.id">
         <input
           id="att-internship"
           name="opp-attribute"
           type="checkbox"
-          value="Internship"
+          v-bind:value="type.id"
           v-model="oppAttributes"
         />
-        <label for="att-internship">Internship</label>
-      </div>
-      <div>
-        <input
-          id="att-remote"
-          name="opp-attribute"
-          type="checkbox"
-          value="Remote Friendly"
-          v-model="oppAttributes"
-        />
-        <label for="att-remote">Remote Friendly</label>
-      </div>
-      <div>
-        <input
-          id="att-temp"
-          name="opp-attribute"
-          type="checkbox"
-          value="Temp"
-          v-model="oppAttributes"
-        />
-        <label for="att-temp">Temp</label>
+        <label for="att-internship">{{ type.display }}</label>
       </div>
     </div>
     <div>
@@ -99,6 +79,8 @@
 <script>
 import { JAWBS } from "../../_mock/jobs.js";
 import { CATEGORIES } from "../../enums/category.js";
+import { JOB_TYPES } from "../../enums/jobTypes.js";
+
 export default {
   data() {
     return {
@@ -108,6 +90,7 @@ export default {
       oppCategory: null,
       oppAttributes: [],
       categoryTypes: CATEGORIES,
+      jobTypes: JOB_TYPES,
       oppUrl: null,
       jobs: JAWBS,
       errors: [],

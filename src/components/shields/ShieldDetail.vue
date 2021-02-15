@@ -8,16 +8,14 @@
       v-bind:key="attribute"
       class="attribute"
     >
-      {{ attribute }}
-      <span v-if="attribute === 'Remote Friendly'">🌎</span>
-      <span v-else-if="attribute === 'Internship'">🎓</span>
-      <span v-else-if="attribute === 'Temp'">⌚</span>
+      {{ getType(attribute) }}
     </p>
   </div>
 </template>
 
 <script>
 import { CATEGORIES_BY_INT } from "../../enums/category.js";
+import { JOB_TYPE_BY_INT } from "../../enums/jobTypes.js";
 export default {
   name: "ShieldDetail",
   props: {
@@ -26,6 +24,9 @@ export default {
   methods: {
     getCategory(cat_id) {
       return CATEGORIES_BY_INT[cat_id];
+    },
+    getType(type_id) {
+      return JOB_TYPE_BY_INT[type_id];
     },
   },
 };
