@@ -6,7 +6,7 @@
       v-bind:class="{ expanded: expanded }"
     >
       <div class="flex-row">
-        <div>
+        <div id="header-details">
           <h2>{{ job.title }}</h2>
           <span>{{ job.company }}</span>
         </div>
@@ -25,7 +25,7 @@
     </div>
 
     <div class="flex-column" v-if="expanded">
-      <div class="details">
+      <div id="opp-description">
         <p>{{ job.description }}</p>
       </div>
       <router-link
@@ -94,13 +94,6 @@ span {
   flex-direction: column;
 }
 
-.details {
-  white-space: pre-line;
-  padding: 12px;
-  border-top: unset;
-  border-radius: 0px 0px 16px 16px;
-}
-
 .expanded {
   border-radius: 16px 16px 0px 0px;
   border-bottom: unset;
@@ -118,6 +111,19 @@ span {
 }
 
 .tab:hover {
+  border-color: var(--rb-main);
+  color: var(--rb-main);
   background-color: var(--rb-third-light);
+}
+
+#header-details {
+  text-transform: capitalize;
+}
+
+#opp-description {
+  white-space: pre-line;
+  padding: 12px;
+  border-top: unset;
+  border-radius: 0px 0px 16px 16px;
 }
 </style>
