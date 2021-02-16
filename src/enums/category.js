@@ -1,5 +1,6 @@
 export const CATEGORIES = {
   ACCOUNT_MANAGEMENT: { id: 1, display: "Account Management 🤝" },
+  ADMINISTRATIVE: { id: 2, display: "Administrative 📆" },
   ART: { id: 5, display: "Art 🎨" },
   BUSINESS: { id: 10, display: "Business 📊" },
   DESIGN: { id: 15, display: "Design 📐" },
@@ -15,6 +16,7 @@ export const CATEGORIES = {
 
 export const CATEGORIES_BY_INT = {
   1: "Account Management 🤝",
+  2: "Administrative 📝",
   5: "Art 🎨",
   10: "Business 📊",
   15: "Design 📐",
