@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import ShieldDetail from "../shields/ShieldDetail.vue";
+import ShieldDetail from "../ui/ShieldDetail.vue";
 import firebaseInit from "../../firebaseInit.js";
 const jobsRef = firebaseInit.firestore().collection("opportunities");
 export default {
