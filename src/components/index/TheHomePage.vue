@@ -1,9 +1,9 @@
 <template>
   <div class="flex-column" id="home-page">
-    <span id="welcome-msg"
-      >Explore entry level and internship opportunities that will level up your
-      experience.</span
-    >
+    <h1 id="welcome-msg">
+      Explore entry level and internship opportunities that will level up your
+      experience.
+    </h1>
     <job-index></job-index>
   </div>
 </template>
