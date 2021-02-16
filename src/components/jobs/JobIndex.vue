@@ -56,9 +56,7 @@ export default {
     },
     async filterListingByIndustry(category) {
       this.categoryFilter = category;
-      const query = await this.buildQuery();
-      const industryList = await query.get();
-      this.convertToDataArray(industryList);
+      this.makeRequest();
     },
     async filterListingByType(type) {
       if (this.typeFilter.includes(type)) {
@@ -67,6 +65,9 @@ export default {
       } else {
         this.typeFilter.push(type);
       }
+      this.makeRequest();
+    },
+    async makeRequest() {
       const query = await this.buildQuery();
       const industryList = await query.get();
       this.convertToDataArray(industryList);
