@@ -20,7 +20,12 @@
     </button>
   </div>
   <div id="opp-holder" class="flex-column">
+    <load-spinner v-if="loading"></load-spinner>
+    <h2 id="no-results" v-else-if="jobs.length < 1">
+      We currently don't have any opportunitries to show for these filters 😭
+    </h2>
     <job-card
+      v-else
       v-for="job of jobs"
       v-bind:key="job.id"
       v-bind:job="job"
@@ -30,15 +35,15 @@
 
 <script>
 import JobCard from "./JobCard.vue";
+import LoadSpinner from "../ui/LoadSpinner.vue";
 import firebaseInit from "../../firebaseInit.js";
 import { CATEGORIES } from "../../enums/category.js";
 import { JOB_TYPES } from "../../enums/jobTypes.js";
 
 const jobsRef = firebaseInit.firestore().collection("opportunities");
-//firebaseInit.firestore.setLogLevel("debug");
 
 export default {
-  components: { JobCard },
+  components: { JobCard, LoadSpinner },
   name: "JobIndex",
   data() {
     return {
@@ -47,15 +52,19 @@ export default {
       jobTypes: JOB_TYPES,
       typeFilter: [],
       categoryFilter: null,
+      loading: true,
     };
   },
   methods: {
     async getListings() {
       const jawbs = await jobsRef.limit(5).get();
       this.convertToDataArray(jawbs);
+      this.loading = false;
     },
     async filterListingByIndustry(category) {
-      this.categoryFilter = category;
+      this.categoryFilter != category
+        ? (this.categoryFilter = category)
+        : (this.categoryFilter = null);
       this.makeRequest();
     },
     async filterListingByType(type) {
@@ -68,9 +77,11 @@ export default {
       this.makeRequest();
     },
     async makeRequest() {
+      this.loading = true;
       const query = await this.buildQuery();
       const industryList = await query.get();
       this.convertToDataArray(industryList);
+      this.loading = false;
     },
     buildQuery() {
       let query = jobsRef;
@@ -113,7 +124,11 @@ export default {
 #filter-btn-holder {
   flex-wrap: wrap;
   justify-content: space-evenly;
-  margin-top: 24px;
+  margin-top: 12px;
+}
+
+#no-results {
+  text-align: center;
 }
 
 .filter-btn {

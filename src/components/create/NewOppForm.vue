@@ -6,6 +6,9 @@
       <router-link to="/" class="link inverse">Back Home</router-link>
     </div>
   </div>
+  <div class="flex-column card" v-else-if="processing">
+    <load-spinner></load-spinner>
+  </div>
   <form @submit.prevent="submitForm()" class="flex-column card" v-else>
     <div class="form-control">
       <label for="opp-title">Job Title*</label>
@@ -77,12 +80,14 @@
 </template>
 
 <script>
+import LoadSpinner from "../ui/LoadSpinner.vue";
 import { CATEGORIES } from "../../enums/category.js";
 import { JOB_TYPES } from "../../enums/jobTypes.js";
 import firebaseInit from "../../firebaseInit.js";
 const jobsRef = firebaseInit.firestore().collection("opportunities");
 
 export default {
+  components: { LoadSpinner },
   data() {
     return {
       oppTitle: null,
@@ -95,11 +100,13 @@ export default {
       oppUrl: null,
       errors: [],
       submitted: false,
+      processing: false,
     };
   },
   methods: {
     submitForm() {
       if (this.checkFormValidity()) {
+        this.processing = true;
         const newJob = {
           title: this.oppTitle.trim(),
           company: this.oppCompany.trim(),
@@ -109,9 +116,11 @@ export default {
           created: new Date(),
           url: this.oppUrl.trim(),
         };
-        jobsRef.add(newJob);
-        this.resetForm();
-        this.submitted = true;
+        jobsRef.add(newJob).then(() => {
+          this.resetForm();
+          this.submitted = true;
+          this.processing = false;
+        });
       }
     },
     checkFormValidity() {
