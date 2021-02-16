@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import ShieldDetail from "../shields/ShieldDetail.vue";
+import ShieldDetail from "../ui/ShieldDetail.vue";
 export default {
   components: { ShieldDetail },
   name: "JobCard",
