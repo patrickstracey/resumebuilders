@@ -31,13 +31,17 @@
     <div class="form-control">
       <label for="opp-url">Where to Apply URL*</label>
       <input id="opp-url" name="opp-url" type="url" v-model.trim="oppUrl" />
+      <small
+        >Applicants cannot apply via our site directly, so we need a URL to
+        direct them to where they can submit their applications.</small
+      >
     </div>
     <div class="form-control">
       <label for="opp-description">Job Description*</label>
       <textarea
         id="opp-description"
         name="opp-description"
-        rows="8"
+        rows="14"
         v-model="oppDescription"
       ></textarea>
     </div>

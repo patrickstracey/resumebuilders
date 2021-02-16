@@ -73,6 +73,10 @@ export default {
   margin-top: 24px;
 }
 
+.headline {
+  text-transform: capitalize;
+}
+
 #apply-btn {
   padding: 8px 16px 8px 16px;
   margin-top: 24px;
