@@ -77,9 +77,10 @@
 </template>
 
 <script>
-import { JAWBS } from "../../_mock/jobs.js";
 import { CATEGORIES } from "../../enums/category.js";
 import { JOB_TYPES } from "../../enums/jobTypes.js";
+import firebaseInit from "../../firebaseInit.js";
+const jobsRef = firebaseInit.firestore().collection("opportunities");
 
 export default {
   data() {
@@ -92,7 +93,6 @@ export default {
       categoryTypes: CATEGORIES,
       jobTypes: JOB_TYPES,
       oppUrl: null,
-      jobs: JAWBS,
       errors: [],
       submitted: false,
     };
@@ -101,7 +101,6 @@ export default {
     submitForm() {
       if (this.checkFormValidity()) {
         const newJob = {
-          id: Math.floor(Math.random() * 100) + 100,
           title: this.oppTitle.trim(),
           company: this.oppCompany.trim(),
           description: this.oppDescription.trim(),
@@ -110,7 +109,7 @@ export default {
           created: new Date(),
           url: this.oppUrl.trim(),
         };
-        JAWBS.unshift(newJob);
+        jobsRef.add(newJob);
         this.resetForm();
         this.submitted = true;
       }
