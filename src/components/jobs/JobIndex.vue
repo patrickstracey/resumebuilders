@@ -55,13 +55,14 @@ export default {
       loading: true,
       mostRecentQuery: null,
       lastResultDoc: null,
+      unfilteredResults: [],
     };
   },
   methods: {
-    async getListings() {
+    async getInitListings() {
       this.mostRecentQuery = jobsRef.orderBy("created", "desc");
-      const jawbs = await this.mostRecentQuery.limit(5).get();
-      this.convertToDataArray(jawbs);
+      const jawbs = await this.mostRecentQuery.limit(2).get();
+      this.convertToDataArray(jawbs, false);
       this.lastResultDoc = jawbs.docs[jawbs.docs.length - 1];
       this.loading = false;
     },
@@ -82,9 +83,13 @@ export default {
     },
     async makeRequest(limit = 10) {
       this.loading = true;
+      if (this.categoryFilter == null && this.typeFilter.length == 0) {
+        this.jobs = this.unfilteredResults;
+        return;
+      }
       const query = await this.buildQuery(limit);
       const industryList = await query.get();
-      this.convertToDataArray(industryList);
+      this.convertToDataArray(industryList, false);
       this.mostRecentQuery = query;
       if (industryList.docs.length < limit) {
         this.lastResultDoc = null;
@@ -115,9 +120,6 @@ export default {
     },
     async buildQuery(limit) {
       let query = jobsRef;
-      if (this.categoryFilter == null && this.typeFilter.length == 0) {
-        return query.limit(limit);
-      }
       if (this.categoryFilter) {
         query = query.where("category", "==", this.categoryFilter);
       }
@@ -130,12 +132,19 @@ export default {
       }
       return query.orderBy("created", "desc").limit(limit);
     },
-    convertToDataArray(dataArray, appendToExistingResults = false) {
+    convertToDataArray(dataArray, appendToExistingResults) {
       appendToExistingResults ? "" : (this.jobs = []);
+      const unfilteredQuery =
+        this.categoryFilter == null && this.typeFilter.length == 0;
       dataArray.forEach((result) => {
         const jawb = { id: result.id, ...result.data() };
         this.jobs.push(jawb);
+        if (unfilteredQuery) {
+          this.unfilteredResults.push(jawb);
+        }
       });
+
+      console.log(this.unfilteredResults);
     },
     scroll() {
       window.onscroll = () => {
@@ -150,7 +159,7 @@ export default {
   },
 
   mounted() {
-    this.getListings();
+    this.getInitListings();
     this.scroll();
   },
 };
