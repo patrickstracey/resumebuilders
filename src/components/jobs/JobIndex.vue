@@ -20,8 +20,7 @@
     </button>
   </div>
   <div id="opp-holder" class="flex-column">
-    <load-spinner v-if="loading"></load-spinner>
-    <h2 id="no-results" v-else-if="jobs.length < 1">
+    <h2 id="no-results" v-if="jobs.length < 1 && loading == false">
       We currently don't have any opportunitries to show for these filters 😭
     </h2>
     <job-card
@@ -30,6 +29,7 @@
       v-bind:key="job.id"
       v-bind:job="job"
     ></job-card>
+    <load-spinner v-if="loading"></load-spinner>
   </div>
 </template>
 
@@ -53,22 +53,22 @@ export default {
       typeFilter: [],
       categoryFilter: null,
       loading: true,
+      mostRecentQuery: null,
+      lastResultDoc: null,
     };
   },
   methods: {
     async getListings() {
-      const jawbs = await jobsRef
-        .orderBy("created", "desc")
-        .limit(6)
-        .get();
+      this.mostRecentQuery = jobsRef.orderBy("created", "desc");
+      const jawbs = await this.mostRecentQuery.limit(5).get();
       this.convertToDataArray(jawbs);
+      this.lastResultDoc = jawbs.docs[jawbs.docs.length - 1];
       this.loading = false;
     },
     async filterListingByIndustry(category) {
       this.categoryFilter != category
         ? (this.categoryFilter = category)
         : (this.categoryFilter = null);
-      console.log(this.categoryFilter);
       this.makeRequest();
     },
     async filterListingByType(type) {
@@ -80,17 +80,43 @@ export default {
       }
       this.makeRequest();
     },
-    async makeRequest() {
+    async makeRequest(limit = 10) {
       this.loading = true;
-      const query = await this.buildQuery();
+      const query = await this.buildQuery(limit);
       const industryList = await query.get();
       this.convertToDataArray(industryList);
+      this.mostRecentQuery = query;
+      if (industryList.docs.length < limit) {
+        this.lastResultDoc = null;
+      } else {
+        this.lastResultDoc = industryList.docs[industryList.docs.length - 1];
+      }
       this.loading = false;
     },
-    buildQuery() {
+    async getAdditionalResults(limit) {
+      if (this.lastResultDoc != null && this.loading == false) {
+        this.loading = true;
+        const query = this.mostRecentQuery.startAfter(
+          this.lastResultDoc.data().created
+        );
+        const industryList = await query.limit(limit).get();
+        this.convertToDataArray(industryList, true);
+        this.mostRecentQuery = query; //need to add pagination logic here
+        if (industryList.docs.length < limit) {
+          this.lastResultDoc = null;
+        } else {
+          this.lastResultDoc = industryList.docs[industryList.docs.length - 1];
+        }
+        this.loading = false;
+      } else {
+        this.lastResultDoc = null;
+        this.loading = false;
+      }
+    },
+    async buildQuery(limit) {
       let query = jobsRef;
       if (this.categoryFilter == null && this.typeFilter.length == 0) {
-        return query.limit(6);
+        return query.limit(limit);
       }
       if (this.categoryFilter) {
         query = query.where("category", "==", this.categoryFilter);
@@ -102,18 +128,30 @@ export default {
           this.typeFilter
         );
       }
-      return query.orderBy("created", "desc").limit(24);
+      return query.orderBy("created", "desc").limit(limit);
     },
-    convertToDataArray(dataArray) {
-      this.jobs = [];
+    convertToDataArray(dataArray, appendToExistingResults = false) {
+      appendToExistingResults ? "" : (this.jobs = []);
       dataArray.forEach((result) => {
         const jawb = { id: result.id, ...result.data() };
         this.jobs.push(jawb);
       });
     },
+    scroll() {
+      window.onscroll = () => {
+        let bottomOfWindow =
+          window.innerHeight + window.pageYOffset >=
+          document.body.offsetHeight - 12;
+        if (bottomOfWindow) {
+          this.getAdditionalResults(10);
+        }
+      };
+    },
   },
+
   mounted() {
     this.getListings();
+    this.scroll();
   },
 };
 </script>
