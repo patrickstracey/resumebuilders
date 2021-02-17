@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-row" id="filter-btn-holder">
+  <div id="filter-btn-holder">
     <button
       v-for="type of jobTypes"
       v-bind:key="type.id"
@@ -57,7 +57,10 @@ export default {
   },
   methods: {
     async getListings() {
-      const jawbs = await jobsRef.limit(5).get();
+      const jawbs = await jobsRef
+        .orderBy("created", "desc")
+        .limit(6)
+        .get();
       this.convertToDataArray(jawbs);
       this.loading = false;
     },
@@ -65,6 +68,7 @@ export default {
       this.categoryFilter != category
         ? (this.categoryFilter = category)
         : (this.categoryFilter = null);
+      console.log(this.categoryFilter);
       this.makeRequest();
     },
     async filterListingByType(type) {
@@ -85,6 +89,9 @@ export default {
     },
     buildQuery() {
       let query = jobsRef;
+      if (this.categoryFilter == null && this.typeFilter.length == 0) {
+        return query.limit(6);
+      }
       if (this.categoryFilter) {
         query = query.where("category", "==", this.categoryFilter);
       }
@@ -95,7 +102,7 @@ export default {
           this.typeFilter
         );
       }
-      return query.limit(24);
+      return query.orderBy("created", "desc").limit(24);
     },
     convertToDataArray(dataArray) {
       this.jobs = [];
@@ -122,8 +129,8 @@ export default {
 }
 
 #filter-btn-holder {
-  flex-wrap: wrap;
-  justify-content: space-evenly;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   margin-top: 12px;
 }
 
@@ -135,8 +142,7 @@ export default {
   margin: 4px;
   background-color: white;
   border-width: 3px;
-  flex-basis: 238px;
-  flex-grow: 1;
+  justify-self: stretch;
 }
 
 .primary {
