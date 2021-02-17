@@ -40,22 +40,22 @@ export default {
 
 .attribute {
   margin: 0px 12px 0px 0px;
-  border: 1px solid var(--rb-main);
   border-radius: 6px;
   padding: 4px 12px 4px 12px;
-  background-color: var(--rb-main-light);
-  color: var(--rb-main);
   font-size: 14px;
+  background-color: var(--rb-accent-light);
+  color: var(--rb-accent-dark);
+  border: 1px solid var(--rb-accent-dark);
 }
 
 .category-shield {
   margin: 0px 12px 0px 0px;
-  border: 1px solid var(--rb-accent-dark);
   border-radius: 6px;
   padding: 4px 12px 4px 12px;
-  background-color: var(--rb-accent-light);
-  color: var(--rb-accent-dark);
   font-size: 14px;
+  border: 1px solid var(--rb-main);
+  background-color: var(--rb-main-light);
+  color: var(--rb-main);
 }
 
 @media screen and (max-width: 600px) {
