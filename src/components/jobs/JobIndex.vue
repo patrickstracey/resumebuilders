@@ -61,7 +61,7 @@ export default {
   methods: {
     async getInitListings() {
       this.mostRecentQuery = jobsRef.orderBy("created", "desc");
-      const jawbs = await this.mostRecentQuery.limit(2).get();
+      const jawbs = await this.mostRecentQuery.limit(4).get();
       this.convertToDataArray(jawbs, false);
       this.lastResultDoc = jawbs.docs[jawbs.docs.length - 1];
       this.loading = false;
@@ -85,6 +85,10 @@ export default {
       this.loading = true;
       if (this.categoryFilter == null && this.typeFilter.length == 0) {
         this.jobs = this.unfilteredResults;
+        this.mostRecentQuery = jobsRef.orderBy("created", "desc");
+        this.lastResultDoc = this.unfilteredResults[
+          this.unfilteredResults.length - 1
+        ];
         return;
       }
       const query = await this.buildQuery(limit);
@@ -143,8 +147,6 @@ export default {
           this.unfilteredResults.push(jawb);
         }
       });
-
-      console.log(this.unfilteredResults);
     },
     scroll() {
       window.onscroll = () => {
