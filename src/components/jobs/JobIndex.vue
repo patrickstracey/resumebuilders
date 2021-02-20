@@ -20,7 +20,10 @@
     </button>
   </div>
   <div id="opp-holder" class="flex-column">
-    <h2 id="no-results" v-if="jobs.length < 1 && loading == false">
+    <h2
+      id="no-results"
+      v-if="(jobs == null || jobs.length < 1) && loading == false"
+    >
       We currently don't have any opportunitries to show for these filters 😭
     </h2>
     <job-card
@@ -55,7 +58,6 @@ export default {
       loading: true,
       mostRecentQuery: null,
       lastResultDoc: null,
-      unfilteredResults: [],
     };
   },
   methods: {
@@ -83,44 +85,64 @@ export default {
     },
     async makeRequest(limit = 10) {
       this.loading = true;
-      if (this.categoryFilter == null && this.typeFilter.length == 0) {
-        this.jobs = this.unfilteredResults;
-        this.mostRecentQuery = jobsRef.orderBy("created", "desc");
-        this.lastResultDoc = this.unfilteredResults[
-          this.unfilteredResults.length - 1
-        ];
-        return;
-      }
-      const query = await this.buildQuery(limit);
-      const industryList = await query.get();
-      this.convertToDataArray(industryList, false);
-      this.mostRecentQuery = query;
-      if (industryList.docs.length < limit) {
-        this.lastResultDoc = null;
+      const qid = this.queryID();
+      const stateResults = this.$store.getters.retrieveStoredResults(qid);
+      if (stateResults != null) {
+        this.jobs = stateResults;
+        this.mostRecentQuery = this.buildQuery(limit);
+        this.loading = false;
       } else {
-        this.lastResultDoc = industryList.docs[industryList.docs.length - 1];
-      }
-      this.loading = false;
-    },
-    async getAdditionalResults(limit) {
-      if (this.lastResultDoc != null && this.loading == false) {
-        this.loading = true;
-        const query = this.mostRecentQuery.startAfter(
-          this.lastResultDoc.data().created
-        );
-        const industryList = await query.limit(limit).get();
-        this.convertToDataArray(industryList, true);
-        this.mostRecentQuery = query; //need to add pagination logic here
+        const query = await this.buildQuery(limit);
+        const industryList = await query.get();
+        this.convertToDataArray(industryList, false);
+        this.mostRecentQuery = query;
         if (industryList.docs.length < limit) {
           this.lastResultDoc = null;
         } else {
           this.lastResultDoc = industryList.docs[industryList.docs.length - 1];
         }
         this.loading = false;
+      }
+    },
+    async getAdditionalResults(limit) {
+      if (this.lastResultDoc != null && this.loading == false) {
+        this.loading = true;
+        const createdDataPoint = this.lastResultDoc.data()
+          ? this.lastResultDoc.data().created
+          : this.lastResultDoc.created;
+        const query = this.mostRecentQuery.startAfter(createdDataPoint);
+        const nextList = await query.limit(limit).get();
+        this.convertToDataArray(nextList, true);
+        if (nextList.docs.length < limit) {
+          this.lastResultDoc = null;
+        } else {
+          this.lastResultDoc = nextList.docs[nextList.docs.length - 1];
+        }
+        this.loading = false;
       } else {
         this.lastResultDoc = null;
         this.loading = false;
       }
+    },
+    convertToDataArray(dataArray, appendToExistingResults) {
+      appendToExistingResults ? null : (this.jobs = []);
+      const qid = this.queryID();
+      dataArray.forEach((result) => {
+        const jawb = { id: result.id, ...result.data() };
+        this.jobs.push(jawb);
+        this.$store.commit({
+          type: "addListingToState",
+          filterId: qid,
+          listing: jawb,
+        });
+      });
+    },
+    queryID() {
+      const intern = this.typeFilter.includes(1) ? 100 : 0;
+      const remote = this.typeFilter.includes(2) ? 20 : 0;
+      const temp = this.typeFilter.includes(3) ? 3 : 0;
+      const qid = this.categoryFilter * 1000 + intern + remote + temp;
+      return qid;
     },
     async buildQuery(limit) {
       let query = jobsRef;
@@ -135,18 +157,6 @@ export default {
         );
       }
       return query.orderBy("created", "desc").limit(limit);
-    },
-    convertToDataArray(dataArray, appendToExistingResults) {
-      appendToExistingResults ? "" : (this.jobs = []);
-      const unfilteredQuery =
-        this.categoryFilter == null && this.typeFilter.length == 0;
-      dataArray.forEach((result) => {
-        const jawb = { id: result.id, ...result.data() };
-        this.jobs.push(jawb);
-        if (unfilteredQuery) {
-          this.unfilteredResults.push(jawb);
-        }
-      });
     },
     scroll() {
       window.onscroll = () => {
