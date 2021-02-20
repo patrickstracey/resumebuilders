@@ -6,6 +6,9 @@
       <router-link to="/" class="link inverse">Back Home</router-link>
     </div>
   </div>
+  <div class="flex-column card" v-else-if="processing">
+    <load-spinner></load-spinner>
+  </div>
   <form @submit.prevent="submitForm()" class="flex-column card" v-else>
     <div class="form-control">
       <label for="opp-title">Job Title*</label>
@@ -28,13 +31,17 @@
     <div class="form-control">
       <label for="opp-url">Where to Apply URL*</label>
       <input id="opp-url" name="opp-url" type="url" v-model.trim="oppUrl" />
+      <small
+        >Applicants cannot apply via our site directly, so we need a URL to
+        direct them to where they can submit their applications.</small
+      >
     </div>
     <div class="form-control">
       <label for="opp-description">Job Description*</label>
       <textarea
         id="opp-description"
         name="opp-description"
-        rows="8"
+        rows="14"
         v-model="oppDescription"
       ></textarea>
     </div>
@@ -53,35 +60,15 @@
     </div>
     <div class="form-control">
       <h2>Relevant Tags</h2>
-      <div>
+      <div v-for="type of jobTypes" v-bind:key="type.id">
         <input
           id="att-internship"
           name="opp-attribute"
           type="checkbox"
-          value="Internship"
+          v-bind:value="type.id"
           v-model="oppAttributes"
         />
-        <label for="att-internship">Internship</label>
-      </div>
-      <div>
-        <input
-          id="att-remote"
-          name="opp-attribute"
-          type="checkbox"
-          value="Remote Friendly"
-          v-model="oppAttributes"
-        />
-        <label for="att-remote">Remote Friendly</label>
-      </div>
-      <div>
-        <input
-          id="att-temp"
-          name="opp-attribute"
-          type="checkbox"
-          value="Temp"
-          v-model="oppAttributes"
-        />
-        <label for="att-temp">Temp</label>
+        <label for="att-internship">{{ type.display }}</label>
       </div>
     </div>
     <div>
@@ -97,9 +84,14 @@
 </template>
 
 <script>
-import { JAWBS } from "../../_mock/jobs.js";
+import LoadSpinner from "../ui/LoadSpinner.vue";
 import { CATEGORIES } from "../../enums/category.js";
+import { JOB_TYPES } from "../../enums/jobTypes.js";
+import firebaseInit from "../../firebaseInit.js";
+const jobsRef = firebaseInit.firestore().collection("opportunities");
+
 export default {
+  components: { LoadSpinner },
   data() {
     return {
       oppTitle: null,
@@ -108,17 +100,18 @@ export default {
       oppCategory: null,
       oppAttributes: [],
       categoryTypes: CATEGORIES,
+      jobTypes: JOB_TYPES,
       oppUrl: null,
-      jobs: JAWBS,
       errors: [],
       submitted: false,
+      processing: false,
     };
   },
   methods: {
     submitForm() {
       if (this.checkFormValidity()) {
+        this.processing = true;
         const newJob = {
-          id: Math.floor(Math.random() * 100) + 100,
           title: this.oppTitle.trim(),
           company: this.oppCompany.trim(),
           description: this.oppDescription.trim(),
@@ -127,9 +120,11 @@ export default {
           created: new Date(),
           url: this.oppUrl.trim(),
         };
-        JAWBS.unshift(newJob);
-        this.resetForm();
-        this.submitted = true;
+        jobsRef.add(newJob).then(() => {
+          this.resetForm();
+          this.submitted = true;
+          this.processing = false;
+        });
       }
     },
     checkFormValidity() {
@@ -198,6 +193,7 @@ input[type="checkbox"] {
   display: inline-block;
   width: auto;
   margin-right: 1rem;
+  cursor: pointer;
 }
 
 input[type="text"],
@@ -216,7 +212,7 @@ select {
   width: 100%;
   font-family: inherit;
   font-size: inherit;
-  cursor: inherit;
+  cursor: pointer;
   line-height: inherit;
   height: 32px;
 }
@@ -268,7 +264,6 @@ option:focus {
 #submit-btn {
   padding: 8px 16px 8px 16px;
   margin-top: 24px;
-  cursor: pointer;
 }
 
 #success-actions {
