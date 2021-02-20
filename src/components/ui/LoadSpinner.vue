@@ -52,7 +52,7 @@ export default {
 }
 
 .loader li:nth-child(2) {
-  animation-delay: 1.7s;
+  animation-delay: 0.32s;
 }
 
 .loader li:nth-child(3) {
@@ -61,7 +61,7 @@ export default {
 }
 
 .loader li:nth-child(4) {
-  animation-delay: 1s;
+  animation-delay: 0.6s;
 }
 
 .loader li:nth-child(5) {
@@ -69,23 +69,23 @@ export default {
 }
 
 .loader li:nth-child(6) {
-  animation-delay: 1.5s;
+  animation-delay: 0.15s;
   background-color: var(--rb-main-light-active);
 }
 
 .loader li:nth-child(7) {
-  animation-delay: 0.5s;
+  animation-delay: 0.4s;
   background-color: var(--rb-main-light-active);
 }
 
 .loader li:nth-child(8) {
-  animation-delay: 2s;
+  animation-delay: 0.1s;
   animation-duration: 1s;
   background-color: var(--rb-main-light-active);
 }
 
 .loader li:nth-child(9) {
-  animation-delay: 3.5s;
+  animation-delay: 0.5s;
 }
 
 @keyframes radiate {
