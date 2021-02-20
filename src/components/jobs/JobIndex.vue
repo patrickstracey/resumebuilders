@@ -24,7 +24,7 @@
       id="no-results"
       v-if="(jobs == null || jobs.length < 1) && loading == false"
     >
-      We currently don't have any opportunities to show for these filters 😭
+      We currently don't have any opportunities to show for these preferences 😭
     </h2>
     <job-card
       v-else
@@ -63,10 +63,10 @@ export default {
   methods: {
     async getInitListings() {
       this.mostRecentQuery = jobsRef.orderBy("created", "desc");
-      if (this.$store.getters.retrieveStoredResults(0) != []) {
+      if (this.$store.getters.retrieveStoredResults(0).length > 0) {
         this.jobs = this.$store.getters.retrieveStoredResults(0);
       } else {
-        const jawbs = await this.mostRecentQuery.limit(4).get();
+        const jawbs = await this.mostRecentQuery.limit(5).get();
         this.convertToDataArray(jawbs, false);
         this.lastResultDoc = jawbs.docs[jawbs.docs.length - 1];
       }
@@ -106,29 +106,32 @@ export default {
     },
     async makeRequest(limit = 10) {
       const qid = this.queryID();
+      const query = await this.buildQuery(limit);
       const stateResults = this.$store.getters.retrieveStoredResults(qid);
       if (stateResults != null) {
         this.jobs = stateResults;
-        this.mostRecentQuery = this.buildQuery(limit);
+        stateResults.length >= 5 && stateResults.length % 5 === 0
+          ? (this.lastResultDoc = stateResults[stateResults.length - 1])
+          : (this.lastResultDoc = null);
       } else {
-        const query = await this.buildQuery(limit);
         const industryList = await query.get();
         this.convertToDataArray(industryList, false);
-        this.mostRecentQuery = query;
+
         if (industryList.docs.length < limit) {
           this.lastResultDoc = null;
         } else {
           this.lastResultDoc = industryList.docs[industryList.docs.length - 1];
         }
       }
+      this.mostRecentQuery = query;
       this.loading = false;
     },
     async getAdditionalResults(limit) {
       if (this.lastResultDoc != null && this.loading == false) {
         this.loading = true;
-        const createdDataPoint = this.lastResultDoc.data()
-          ? this.lastResultDoc.data().created
-          : this.lastResultDoc.created;
+        const createdDataPoint = this.lastResultDoc.created
+          ? this.lastResultDoc.created
+          : this.lastResultDoc.data().created;
         const query = this.mostRecentQuery.startAfter(createdDataPoint);
         const nextList = await query.limit(limit).get();
         this.convertToDataArray(nextList, true);
@@ -147,7 +150,11 @@ export default {
       appendToExistingResults ? null : (this.jobs = []);
       const qid = this.queryID();
       dataArray.forEach((result) => {
-        const jawb = { id: result.id, ...result.data() };
+        const jawb = {
+          id: result.id,
+          created: result.data().created,
+          ...result.data(),
+        };
         this.jobs.push(jawb);
         this.$store.commit({
           type: "addListingToState",
