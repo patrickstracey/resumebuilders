@@ -8,16 +8,14 @@
       v-bind:key="attribute"
       class="attribute"
     >
-      {{ attribute }}
-      <span v-if="attribute === 'Remote Friendly'">🌎</span>
-      <span v-else-if="attribute === 'Internship'">🎓</span>
-      <span v-else-if="attribute === 'Temp'">⌚</span>
+      {{ getType(attribute) }}
     </p>
   </div>
 </template>
 
 <script>
 import { CATEGORIES_BY_INT } from "../../enums/category.js";
+import { JOB_TYPE_BY_INT } from "../../enums/jobTypes.js";
 export default {
   name: "ShieldDetail",
   props: {
@@ -26,6 +24,9 @@ export default {
   methods: {
     getCategory(cat_id) {
       return CATEGORIES_BY_INT[cat_id];
+    },
+    getType(type_id) {
+      return JOB_TYPE_BY_INT[type_id];
     },
   },
 };
@@ -39,22 +40,22 @@ export default {
 
 .attribute {
   margin: 0px 12px 0px 0px;
-  border: 1px solid var(--rb-main);
   border-radius: 6px;
   padding: 4px 12px 4px 12px;
-  background-color: var(--rb-main-light);
-  color: var(--rb-main);
   font-size: 14px;
+  background-color: var(--rb-accent-light);
+  color: var(--rb-accent-dark);
+  border: 1px solid var(--rb-accent-dark);
 }
 
 .category-shield {
   margin: 0px 12px 0px 0px;
-  border: 1px solid var(--rb-accent-dark);
   border-radius: 6px;
   padding: 4px 12px 4px 12px;
-  background-color: var(--rb-accent-light);
-  color: var(--rb-accent-dark);
   font-size: 14px;
+  border: 1px solid var(--rb-main);
+  background-color: var(--rb-main-light);
+  color: var(--rb-main);
 }
 
 @media screen and (max-width: 600px) {
