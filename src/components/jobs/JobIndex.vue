@@ -24,7 +24,7 @@
       id="no-results"
       v-if="(jobs == null || jobs.length < 1) && loading == false"
     >
-      We currently don't have any opportunitries to show for these filters 😭
+      We currently don't have any opportunities to show for these filters 😭
     </h2>
     <job-card
       v-else
@@ -63,16 +63,21 @@ export default {
   methods: {
     async getInitListings() {
       this.mostRecentQuery = jobsRef.orderBy("created", "desc");
-      const jawbs = await this.mostRecentQuery.limit(4).get();
-      this.convertToDataArray(jawbs, false);
-      this.lastResultDoc = jawbs.docs[jawbs.docs.length - 1];
+      if (this.$store.getters.retrieveStoredResults(0) != []) {
+        this.jobs = this.$store.getters.retrieveStoredResults(0);
+      } else {
+        const jawbs = await this.mostRecentQuery.limit(4).get();
+        this.convertToDataArray(jawbs, false);
+        this.lastResultDoc = jawbs.docs[jawbs.docs.length - 1];
+      }
+
       this.loading = false;
     },
     async filterListingByIndustry(category) {
       this.categoryFilter != category
         ? (this.categoryFilter = category)
         : (this.categoryFilter = null);
-      this.makeRequest();
+      this.debounce();
     },
     async filterListingByType(type) {
       if (this.typeFilter.includes(type)) {
@@ -81,16 +86,30 @@ export default {
       } else {
         this.typeFilter.push(type);
       }
-      this.makeRequest();
+      this.debounce();
+    },
+    debounce() {
+      this.jobs = [];
+      this.loading = true;
+      const category = [this.categoryFilter];
+      const types = JSON.stringify(this.typeFilter);
+      setTimeout(() => {
+        if (
+          category[0] == this.categoryFilter &&
+          types == JSON.stringify(this.typeFilter)
+        ) {
+          this.makeRequest();
+        } else {
+          return;
+        }
+      }, 900);
     },
     async makeRequest(limit = 10) {
-      this.loading = true;
       const qid = this.queryID();
       const stateResults = this.$store.getters.retrieveStoredResults(qid);
       if (stateResults != null) {
         this.jobs = stateResults;
         this.mostRecentQuery = this.buildQuery(limit);
-        this.loading = false;
       } else {
         const query = await this.buildQuery(limit);
         const industryList = await query.get();
@@ -101,8 +120,8 @@ export default {
         } else {
           this.lastResultDoc = industryList.docs[industryList.docs.length - 1];
         }
-        this.loading = false;
       }
+      this.loading = false;
     },
     async getAdditionalResults(limit) {
       if (this.lastResultDoc != null && this.loading == false) {
