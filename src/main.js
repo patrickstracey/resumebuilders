@@ -4,8 +4,9 @@ import { createStore } from "vuex";
 
 import App from "./App.vue";
 import TheHomePage from "./components/index/TheHomePage.vue";
-import JobDetail from "./components/detail/JobDetail.vue";
-import NewOppForm from "./components/create/NewOppForm.vue";
+
+const NewOppForm = () => import("./components/create/NewOppForm.vue");
+const JobDetail = () => import("./components/detail/JobDetail.vue");
 
 const router = createRouter({
   history: createWebHistory(),
