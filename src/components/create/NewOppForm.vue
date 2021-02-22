@@ -131,7 +131,7 @@ export default {
           location: this.oppLocation,
           created: initDate,
           updated: initDate,
-          url: this.oppUrl.trim(),
+          url: this.oppUrl.trim() + "?utm_source=resume_builders",
         };
         jobsRef.add(newJob).then(() => {
           this.resetForm();
