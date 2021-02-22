@@ -109,6 +109,7 @@ export default {
   },
   methods: {
     submitForm() {
+      const initDate = new Date();
       if (this.checkFormValidity()) {
         this.processing = true;
         const newJob = {
@@ -117,7 +118,8 @@ export default {
           description: this.oppDescription.trim(),
           attributes: this.oppAttributes,
           category: this.oppCategory,
-          created: new Date(),
+          created: initDate,
+          updated: initDate,
           url: this.oppUrl.trim(),
         };
         jobsRef.add(newJob).then(() => {

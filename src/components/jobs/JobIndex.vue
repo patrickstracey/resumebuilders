@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     async getInitListings() {
-      this.mostRecentQuery = jobsRef.orderBy("created", "desc");
+      this.mostRecentQuery = jobsRef.orderBy("updated", "desc");
       if (this.$store.getters.retrieveStoredResults(0).length > 0) {
         this.jobs = this.$store.getters.retrieveStoredResults(0);
       } else {
@@ -182,7 +182,7 @@ export default {
           this.typeFilter
         );
       }
-      return query.orderBy("created", "desc").limit(limit);
+      return query.orderBy("updated", "desc").limit(limit);
     },
     scroll() {
       window.onscroll = () => {
