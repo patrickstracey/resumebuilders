@@ -164,10 +164,13 @@ export default {
       });
     },
     queryID() {
-      const intern = this.typeFilter.includes(1) ? 100 : 0;
-      const remote = this.typeFilter.includes(2) ? 20 : 0;
-      const temp = this.typeFilter.includes(3) ? 3 : 0;
-      const qid = this.categoryFilter * 1000 + intern + remote + temp;
+      const intern = this.typeFilter.includes(1) ? 1000 : 0;
+      const remote = this.typeFilter.includes(2) ? 200 : 0;
+      const temp = this.typeFilter.includes(3) ? 30 : 0;
+      const partTime = this.typeFilter.includes(4) ? 4 : 0;
+      const qid =
+        this.categoryFilter * 10000 + intern + remote + temp + partTime;
+      console.log(qid);
       return qid;
     },
     async buildQuery(limit) {
