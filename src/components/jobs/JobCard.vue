@@ -6,7 +6,7 @@
       v-bind:class="{ expanded: expanded }"
     >
       <div class="flex-row">
-        <div id="header-details">
+        <div class="header-details">
           <h2>{{ job.title }}</h2>
           <span>{{ job.company }}</span>
         </div>
@@ -87,6 +87,10 @@ span {
   cursor: pointer;
 }
 
+.header-details {
+  text-transform: capitalize;
+}
+
 .group {
   margin-top: auto;
   margin-bottom: auto;
@@ -114,10 +118,6 @@ span {
   border-color: var(--rb-main);
   color: var(--rb-main);
   background-color: var(--rb-third-light);
-}
-
-#header-details {
-  text-transform: capitalize;
 }
 
 #opp-description {
