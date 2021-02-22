@@ -3,13 +3,13 @@
     <span v-if="job.category" class="category-shield">{{
       getCategory(job.category)
     }}</span>
-    <p
+    <span
       v-for="attribute of job.attributes"
       v-bind:key="attribute"
       class="attribute"
     >
       {{ getType(attribute) }}
-    </p>
+    </span>
   </div>
 </template>
 

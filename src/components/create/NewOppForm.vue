@@ -37,6 +37,15 @@
       >
     </div>
     <div class="form-control">
+      <label for="opp-location">Location</label>
+      <input
+        id="opp-location"
+        name="opp-location"
+        type="text"
+        v-model.trim="oppLocation"
+      />
+    </div>
+    <div class="form-control">
       <label for="opp-description">Job Description*</label>
       <textarea
         id="opp-description"
@@ -99,6 +108,7 @@ export default {
       oppDescription: null,
       oppCategory: null,
       oppAttributes: [],
+      oppLocation: null,
       categoryTypes: CATEGORIES,
       jobTypes: JOB_TYPES,
       oppUrl: null,
@@ -118,6 +128,7 @@ export default {
           description: this.oppDescription.trim(),
           attributes: this.oppAttributes,
           category: this.oppCategory,
+          location: this.oppLocation,
           created: initDate,
           updated: initDate,
           url: this.oppUrl.trim(),
