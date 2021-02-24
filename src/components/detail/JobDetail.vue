@@ -4,6 +4,10 @@
       <h2>{{ job.title }}</h2>
       <p>{{ job.company }}</p>
       <shield-detail v-bind:job="job"></shield-detail>
+      <shield-city
+        v-if="job.location?.length > 0"
+        v-bind:cities="job.location"
+      ></shield-city>
     </div>
     <div class="details">
       <p>{{ job.description }}</p>
@@ -28,10 +32,11 @@
 
 <script>
 import ShieldDetail from "../ui/ShieldDetail.vue";
+import ShieldCity from "../ui/ShieldCity.vue";
 import firebaseInit from "../../firebaseInit.js";
 const jobsRef = firebaseInit.firestore().collection("opportunities");
 export default {
-  components: { ShieldDetail },
+  components: { ShieldDetail, ShieldCity },
   props: ["oppId"],
   data() {
     return {
