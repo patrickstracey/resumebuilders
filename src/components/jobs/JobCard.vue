@@ -34,7 +34,7 @@
     <div class="flex-column" v-if="expanded">
       <div class="opp-description">
         <shield-city
-          v-if="job.location?.length > 0"
+          v-if="job.location?.length > 1"
           v-bind:cities="job.location"
         ></shield-city>
         <p>{{ job.description }}</p>
