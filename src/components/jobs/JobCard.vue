@@ -9,6 +9,13 @@
         <div class="header-details">
           <h2>{{ job.title }}</h2>
           <span>{{ job.company }}</span>
+          <span v-if="job.location?.length > 0" class="location-text">
+            in
+            {{ job.location[0]
+            }}<span v-if="job.location.length > 1">
+              + {{ job.location.length - 1 }} more</span
+            >
+          </span>
         </div>
         <div class="group flex-column">
           <a
@@ -25,7 +32,11 @@
     </div>
 
     <div class="flex-column" v-if="expanded">
-      <div id="opp-description">
+      <div class="opp-description">
+        <shield-city
+          v-if="job.location?.length > 0"
+          v-bind:cities="job.location"
+        ></shield-city>
         <p>{{ job.description }}</p>
       </div>
       <router-link
@@ -41,8 +52,9 @@
 
 <script>
 import ShieldDetail from "../ui/ShieldDetail.vue";
+import ShieldCity from "../ui/ShieldCity.vue";
 export default {
-  components: { ShieldDetail },
+  components: { ShieldDetail, ShieldCity },
   name: "JobCard",
   data() {
     return {
@@ -98,6 +110,10 @@ span {
   flex-direction: column;
 }
 
+.location-text {
+  text-transform: none;
+}
+
 .expanded {
   border-radius: 16px 16px 0px 0px;
   border-bottom: unset;
@@ -107,20 +123,20 @@ span {
 .tab {
   align-self: flex-end;
   text-decoration: none;
-  color: var(--rb-third);
+  color: var(--rb-main);
   margin: 24px 12px 24px 0px;
   padding: 4px 4px;
-  border: 1px solid var(--rb-third);
+  border: 1px solid var(--rb-main);
   border-radius: 6px;
 }
 
 .tab:hover {
-  border-color: var(--rb-main);
-  color: var(--rb-main);
+  border-color: var(--rb-main-dark);
+  color: var(--rb-main-dark);
   background-color: var(--rb-third-light);
 }
 
-#opp-description {
+.opp-description {
   white-space: pre-line;
   padding: 12px;
   border-top: unset;
