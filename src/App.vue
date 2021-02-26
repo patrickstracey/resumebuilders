@@ -32,7 +32,6 @@ export default {
   --rb-accent-light: #fff7e3;
   --rb-accent-dark: #ff4500;
   --rb-accent-dark-active: #ffeaab;
-  --rb-third: #575555;
   --rb-third-light: #f5f5f5;
 }
 
