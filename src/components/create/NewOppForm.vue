@@ -128,10 +128,10 @@ export default {
           description: this.oppDescription.trim(),
           attributes: this.oppAttributes,
           category: this.oppCategory,
-          location: this.oppLocation,
+          location: this.convertToArray(this.oppLocation),
           created: initDate,
           updated: initDate,
-          url: this.oppUrl.trim() + "?utm_source=resume_builders",
+          url: this.oppUrl.trim(),
         };
         jobsRef.add(newJob).then(() => {
           this.resetForm();
@@ -173,7 +173,6 @@ export default {
     },
     resetForm() {
       this.oppTitle = null;
-      this.oppCompany = null;
       this.oppDescription = null;
       this.oppAttributes = [];
       this.oppUrl = null;
@@ -181,6 +180,16 @@ export default {
     },
     createNewOpp() {
       this.submitted = false;
+    },
+    convertToArray(city) {
+      const r = [];
+      if (city && city != "") {
+        r.push(city);
+      } else {
+        r.push(null);
+      }
+
+      return r;
     },
   },
 };
