@@ -152,7 +152,6 @@ export default {
       dataArray.forEach((result) => {
         const jawb = {
           id: result.id,
-          created: result.data().created,
           ...result.data(),
         };
         this.jobs.push(jawb);
