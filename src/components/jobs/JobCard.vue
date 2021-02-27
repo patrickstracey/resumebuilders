@@ -9,10 +9,7 @@
         <div class="header-details">
           <h2>{{ job.title }}</h2>
           <span>{{ job.company }}</span>
-          <span
-            v-if="job.location[0] != '' && job.location[0] != null"
-            class="location-text"
-          >
+          <span v-if="locationDisplay" class="location-text">
             in
             {{ job.location[0]
             }}<span v-if="job.location.length > 1">
@@ -67,6 +64,19 @@ export default {
   methods: {
     expand() {
       this.expanded = !this.expanded;
+    },
+  },
+  computed: {
+    locationDisplay: function() {
+      if (
+        this.job.location &&
+        this.job.location[0] != "" &&
+        this.job.location[0] != null
+      ) {
+        return this.job.location[0];
+      } else {
+        return null;
+      }
     },
   },
   props: {

@@ -37,14 +37,22 @@
       >
     </div>
     <div class="form-control">
-      <label for="opp-location">Location</label>
-      <input
-        id="opp-location"
-        name="opp-location"
-        type="text"
-        v-model.trim="oppLocation"
-      />
+      <label for="location-geo">Location</label>
+      <select id="location-geo" name="location-geo" v-model="oppLocationGeo">
+        <option v-bind:value="null"> </option>
+        <option
+          v-for="city of cities"
+          v-bind:key="city.name"
+          v-bind:value="city"
+          >{{ city.name }}</option
+        >
+      </select>
+      <small
+        >We currently only serve a select number of locations directly. Feel
+        free to leave this blank.</small
+      >
     </div>
+
     <div class="form-control">
       <label for="opp-description">Job Description*</label>
       <textarea
@@ -95,8 +103,10 @@
 <script>
 import LoadSpinner from "../ui/LoadSpinner.vue";
 import { CATEGORIES } from "../../enums/category.js";
+import { CITIES } from "../../enums/cities.js";
 import { JOB_TYPES } from "../../enums/jobTypes.js";
 import firebaseInit from "../../firebaseInit.js";
+import firebase from "firebase/app";
 const jobsRef = firebaseInit.firestore().collection("opportunities");
 
 export default {
@@ -108,8 +118,9 @@ export default {
       oppDescription: null,
       oppCategory: null,
       oppAttributes: [],
-      oppLocation: null,
+      oppLocationGeo: null,
       categoryTypes: CATEGORIES,
+      cities: CITIES,
       jobTypes: JOB_TYPES,
       oppUrl: null,
       errors: [],
@@ -128,7 +139,17 @@ export default {
           description: this.oppDescription.trim(),
           attributes: this.oppAttributes,
           category: this.oppCategory,
-          location: this.convertToArray(this.oppLocation),
+          location: this.oppLocationGeo
+            ? this.convertToArray(this.oppLocationGeo.name)
+            : null,
+          location_geo: this.oppLocationGeo
+            ? this.convertToArray(
+                new firebase.firestore.GeoPoint(
+                  this.oppLocationGeo.lat,
+                  this.oppLocationGeo.long
+                )
+              )
+            : null,
           created: initDate,
           updated: initDate,
           url: this.oppUrl.trim(),
