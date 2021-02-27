@@ -24,6 +24,11 @@ export const CITIES = {
     lat: 39.5296,
     long: -119.8138,
   },
+  "San Francisco, CA": {
+    name: "San Francisco, CA",
+    lat: 37.773972,
+    long: -122.431297,
+  },
   "Seattle, WA": {
     name: "Seattle, WA",
     lat: 47.608013,
