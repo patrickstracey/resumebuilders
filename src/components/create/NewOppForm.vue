@@ -143,11 +143,9 @@ export default {
             ? this.convertToArray(this.oppLocationGeo.name)
             : null,
           location_geo: this.oppLocationGeo
-            ? this.convertToArray(
-                new firebase.firestore.GeoPoint(
-                  this.oppLocationGeo.lat,
-                  this.oppLocationGeo.long
-                )
+            ? new firebase.firestore.GeoPoint(
+                this.oppLocationGeo.lat,
+                this.oppLocationGeo.long
               )
             : null,
           created: initDate,
