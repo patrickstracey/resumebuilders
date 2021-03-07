@@ -1,6 +1,15 @@
 <template>
   <div id="filter-btn-holder">
     <button
+      v-for="category of categories"
+      v-bind:key="category.id"
+      class="link filter-btn primary"
+      @click="filterListingByIndustry(category.id)"
+      v-bind:class="{ active: categoryFilter === category.id }"
+    >
+      {{ category.display }}
+    </button>
+    <button
       v-for="type of jobTypes"
       v-bind:key="type.id"
       class="link filter-btn accent"
@@ -9,14 +18,15 @@
     >
       {{ type.display }}
     </button>
+
     <button
-      v-for="category of categories"
-      v-bind:key="category.id"
-      class="link filter-btn primary"
-      @click="filterListingByIndustry(category.id)"
-      v-bind:class="{ active: categoryFilter === category.id }"
+      v-for="city of cities"
+      v-bind:key="city.lat"
+      class="link filter-btn city"
+      @click="filterListingByLocationCoords(city)"
+      v-bind:class="{ active: locationFilter === city }"
     >
-      {{ category.display }}
+      📍 {{ city.name }}
     </button>
   </div>
   <div id="opp-holder" class="flex-column">
@@ -40,8 +50,10 @@
 import JobCard from "./JobCard.vue";
 import LoadSpinner from "../ui/LoadSpinner.vue";
 import firebaseInit from "../../firebaseInit.js";
+import firebase from "firebase/app";
 import { CATEGORIES } from "../../enums/category.js";
 import { JOB_TYPES } from "../../enums/jobTypes.js";
+import { CITIES } from "../../enums/cities.js";
 
 const jobsRef = firebaseInit.firestore().collection("opportunities");
 
@@ -53,7 +65,10 @@ export default {
       jobs: [],
       categories: CATEGORIES,
       jobTypes: JOB_TYPES,
+      cities: CITIES,
       typeFilter: [],
+      locationFilter: null,
+      locationCoords: null,
       categoryFilter: null,
       loading: true,
       mostRecentQuery: null,
@@ -88,15 +103,30 @@ export default {
       }
       this.debounce();
     },
+    async filterListingByLocationCoords(city) {
+      if (this.locationFilter != city) {
+        this.locationFilter = city;
+        this.locationCoords = new firebase.firestore.GeoPoint(
+          city.lat,
+          city.long
+        );
+      } else {
+        this.locationFilter = null;
+        this.locationCoords = null;
+      }
+      this.debounce();
+    },
     debounce() {
       this.jobs = [];
       this.loading = true;
       const category = [this.categoryFilter];
       const types = JSON.stringify(this.typeFilter);
+      const locations = JSON.stringify(this.locationFilter);
       setTimeout(() => {
         if (
           category[0] == this.categoryFilter &&
-          types == JSON.stringify(this.typeFilter)
+          types == JSON.stringify(this.typeFilter) &&
+          locations == JSON.stringify(this.locationFilter)
         ) {
           this.makeRequest();
         } else {
@@ -109,6 +139,7 @@ export default {
       const query = await this.buildQuery(limit);
       const stateResults = this.$store.getters.retrieveStoredResults(qid);
       if (stateResults != null) {
+        console.log("I GOT IT!");
         this.jobs = stateResults;
         stateResults.length >= 5 && stateResults.length % 5 === 0
           ? (this.lastResultDoc = stateResults[stateResults.length - 1])
@@ -167,15 +198,30 @@ export default {
       const remote = this.typeFilter.includes(2) ? 200 : 0;
       const temp = this.typeFilter.includes(3) ? 30 : 0;
       const partTime = this.typeFilter.includes(4) ? 4 : 0;
+      const locations = this.locationFilter ? this.locationID() : 0;
       const qid =
-        this.categoryFilter * 10000 + intern + remote + temp + partTime;
+        this.categoryFilter * 10000 +
+        intern +
+        remote +
+        temp +
+        partTime +
+        locations;
       console.log(qid);
       return qid;
+    },
+    locationID() {
+      let number = 0;
+      number += this.locationFilter.lat + this.locationFilter.long;
+      number = parseFloat(number.toFixed(3));
+      return number;
     },
     async buildQuery(limit) {
       let query = jobsRef;
       if (this.categoryFilter) {
         query = query.where("category", "==", this.categoryFilter);
+      }
+      if (this.locationCoords) {
+        query = query.where("location_geo", "==", this.locationCoords);
       }
       if (this.typeFilter.length > 0) {
         query = query.where(
@@ -184,6 +230,7 @@ export default {
           this.typeFilter
         );
       }
+
       return query.orderBy("updated", "desc").limit(limit);
     },
     scroll() {
@@ -217,7 +264,7 @@ export default {
 
 #filter-btn-holder {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(227px, 1fr));
   margin-top: 12px;
 }
 
@@ -256,5 +303,18 @@ export default {
 
 .accent.active {
   background-color: var(--rb-accent-dark-active);
+}
+
+.city {
+  color: var(--rb-city);
+  border-color: var(--rb-city);
+}
+
+.city:hover {
+  background-color: var(--rb-city-bg);
+}
+
+.city.active {
+  background-color: var(--rb-city-bg);
 }
 </style>
