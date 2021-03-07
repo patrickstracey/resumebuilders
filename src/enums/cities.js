@@ -1,4 +1,9 @@
 export const CITIES = {
+  "Atlanta, GA": {
+    name: "Atlanta, GA",
+    lat: 33.753746,
+    long: -84.38633,
+  },
   "Austin, TX": {
     name: "Austin, TX",
     lat: 30.266666,
@@ -8,6 +13,11 @@ export const CITIES = {
     name: "Chicago, IL",
     lat: 41.881832,
     long: -87.623177,
+  },
+  "Denver, CO": {
+    name: "Denver, CO",
+    lat: 39.742043,
+    long: -104.991531,
   },
   "Los Angeles, CA": {
     name: "Los Angeles, CA",
