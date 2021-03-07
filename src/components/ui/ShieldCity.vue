@@ -27,8 +27,9 @@ export default {
   border-radius: 6px;
   padding: 4px 12px 4px 12px;
   font-size: 14px;
-  background-color: #c2dcff4a;
-  color: #1456ac;
-  border: 1px solid #1456ac;
+  background-color: var(--rb-city-bg);
+  color: var(--rb-city);
+  border: 1px solid;
+  border-color: var(--rb-city);
 }
 </style>
