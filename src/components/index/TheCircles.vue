@@ -17,7 +17,7 @@
 
 <style scoped>
 .circle-area {
-  width: 100%;
+  width: 95%;
   height: 100%;
   position: absolute;
   top: 0;
