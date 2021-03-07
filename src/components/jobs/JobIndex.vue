@@ -1,15 +1,6 @@
 <template>
   <div id="filter-btn-holder">
     <button
-      v-for="category of categories"
-      v-bind:key="category.id"
-      class="link filter-btn primary"
-      @click="filterListingByIndustry(category.id)"
-      v-bind:class="{ active: categoryFilter === category.id }"
-    >
-      {{ category.display }}
-    </button>
-    <button
       v-for="type of jobTypes"
       v-bind:key="type.id"
       class="link filter-btn accent"
@@ -18,7 +9,15 @@
     >
       {{ type.display }}
     </button>
-
+    <button
+      v-for="category of categories"
+      v-bind:key="category.id"
+      class="link filter-btn primary"
+      @click="filterListingByIndustry(category.id)"
+      v-bind:class="{ active: categoryFilter === category.id }"
+    >
+      {{ category.display }}
+    </button>
     <button
       v-for="city of cities"
       v-bind:key="city.lat"
@@ -139,7 +138,6 @@ export default {
       const query = await this.buildQuery(limit);
       const stateResults = this.$store.getters.retrieveStoredResults(qid);
       if (stateResults != null) {
-        console.log("I GOT IT!");
         this.jobs = stateResults;
         stateResults.length >= 5 && stateResults.length % 5 === 0
           ? (this.lastResultDoc = stateResults[stateResults.length - 1])
@@ -206,7 +204,6 @@ export default {
         temp +
         partTime +
         locations;
-      console.log(qid);
       return qid;
     },
     locationID() {
