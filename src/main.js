@@ -7,13 +7,19 @@ import TheHomePage from "./components/index/TheHomePage.vue";
 
 const NewOppForm = () => import("./components/create/NewOppForm.vue");
 const JobDetail = () => import("./components/detail/JobDetail.vue");
+const AccountLogin = () => import("./components/account/AccountLogin.vue");
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
     { path: "/", component: TheHomePage },
-    { path: "/new-opportunity", component: NewOppForm },
+    {
+      path: "/new-opportunity",
+      component: NewOppForm,
+      meta: { requiresAuth: true },
+    },
     { path: "/opportunity/:oppId", component: JobDetail, props: true },
+    { path: "/login", component: AccountLogin },
     { path: "/:notFound(.*)", redirect: "/" },
   ],
 });
@@ -24,6 +30,7 @@ const store = createStore({
       previousResults: {
         0: [],
       },
+      currentUser: null,
     };
   },
   mutations: {
@@ -43,6 +50,12 @@ const store = createStore({
         }
       }
     },
+    setCurrentUser(state, user) {
+      state.currentUser = user;
+    },
+    logoutUser(state) {
+      state.currentUser = null;
+    },
   },
   getters: {
     retrieveStoredResults: (state) => (filterID) => {
@@ -52,7 +65,22 @@ const store = createStore({
         return null;
       }
     },
+    retrieveCurrentUser: (state) => () => {
+      if (state.currentUser) {
+        return state.currentUser;
+      } else {
+        return null;
+      }
+    },
   },
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth && store.getters.retrieveCurrentUser() == null) {
+    next("/login");
+  } else {
+    next();
+  }
 });
 
 createApp(App)
