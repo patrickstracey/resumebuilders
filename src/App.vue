@@ -33,6 +33,8 @@ export default {
   --rb-accent-dark: #ff4500;
   --rb-accent-dark-active: #ffeaab;
   --rb-third-light: #f5f5f5;
+  --rb-city: #1456ac;
+  --rb-city-bg: #d7e6f8;
 }
 
 #app {
@@ -59,7 +61,7 @@ h3 {
 }
 
 .link {
-  padding: 4px 12px 4px 12px;
+  padding: 4px;
   border: 1px solid var(--rb-main);
   background-color: var(--rb-main);
   color: white;
