@@ -24,6 +24,7 @@
             target="_blank"
             rel="noopener noreferrer"
             class="link"
+            v-on:click.stop
             >Apply</a
           >
         </div>
