@@ -131,6 +131,7 @@ export default {
   methods: {
     submitForm() {
       const initDate = new Date();
+      const currentUserId = firebaseInit.auth().currentUser.uid;
       if (this.checkFormValidity()) {
         this.processing = true;
         const newJob = {
@@ -151,6 +152,7 @@ export default {
           created: initDate,
           updated: initDate,
           url: this.oppUrl.trim(),
+          created_by: currentUserId,
         };
         jobsRef.add(newJob).then(() => {
           this.resetForm();

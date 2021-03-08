@@ -9,6 +9,7 @@
 import TheHeader from "./components/global/TheHeader.vue";
 import TheFooter from "./components/global/TheFooter.vue";
 import TheCircles from "./components/index/TheCircles.vue";
+import firebaseInit from "./firebaseInit.js";
 
 export default {
   name: "App",
@@ -16,6 +17,25 @@ export default {
     TheHeader,
     TheFooter,
     TheCircles,
+  },
+  methods: {
+    subscribeToAuth() {
+      firebaseInit.auth().onAuthStateChanged((user) => {
+        if (user) {
+          this.$store.commit({
+            type: "setCurrentUser",
+            user: user,
+          });
+        } else {
+          this.$store.commit({
+            type: "logoutUser",
+          });
+        }
+      });
+    },
+  },
+  created() {
+    this.subscribeToAuth();
   },
 };
 </script>
@@ -79,5 +99,20 @@ h3 {
 .link:active {
   border-color: var(--rb-main-dark);
   background-color: var(--rb-main-dark);
+}
+
+.secondary-link {
+  padding: 4px;
+  color: var(--rb-main);
+  text-decoration: none;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 6px;
+  background-color: unset;
+  border-style: none;
+}
+
+.secondary-link:active {
+  background-color: var(--rb-main-light-active);
 }
 </style>
